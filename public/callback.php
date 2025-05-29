@@ -1,13 +1,25 @@
 <?php
-require 'vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php'; // Eğer composer autoload kullanıyorsan
 
-session_start();
+use Dotenv\Dotenv;
 
-// Google Client Configuration
-$client = new Google\Client();
-$client->setClientId('YOUR_CLIENT_ID'); // Google Console'dan alınan ID
-$client->setClientSecret('YOUR_CLIENT_SECRET'); // Google Console'dan alınan Secret
-$client->setRedirectUri('http://localhost/callback.php');
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+$dotenv->load();
+
+$clientId = $_ENV['GOOGLE_CLIENT_ID'] ?? null;
+$clientSecret = $_ENV['GOOGLE_CLIENT_SECRET'] ?? null;
+$redirectUri = $_ENV['GOOGLE_REDIRECT_URI'] ?? null;
+
+if (!$clientId || !$clientSecret || !$redirectUri) {
+    die('Google OAuth config missing!');
+}
+
+// Örneğin Google Client oluşturma
+$client = new Google_Client();
+$client->setClientId($clientId);
+$client->setClientSecret($clientSecret);
+$client->setRedirectUri($redirectUri);
+$client->addScope('email profile');
 
 if (isset($_GET['code'])) {
     // Access Token alma
