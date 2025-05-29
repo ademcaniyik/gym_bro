@@ -1,0 +1,194 @@
+### **Fitness Asistanı Projesi Yol Haritası**
+
+#### **1. Planlama ve Hazırlık**
+
+##### 1.1 Gereksinimlerin Belirlenmesi
+
+* Kullanıcı özellikleri:
+
+  * Hareket ekleme ve güncelleme
+  * Antrenman geçmişini görüntüleme
+  * Günlük set ve tekrar girişleri
+  * OpenAI entegrasyonu ile öneriler alma
+* Kullanıcı türü:
+
+  * Bireysel kullanıcılar
+* Kullanılacak teknoloji:
+
+  * Backend: PHP (Laravel önerilir)
+  * Veritabanı: MySQL
+  * Frontend: HTML, CSS, JavaScript (Tailwind veya Bootstrap önerilir)
+
+##### 1.2 Teknolojik Yığın Kararı
+
+* **Backend:** Laravel (daha kolay yapı ve ORM için)
+* **Veritabanı:** MySQL
+* **Frontend:** Vanilla JS veya bir kütüphane (ör. Vue.js)
+* **API Entegrasyonu:** OpenAI API
+* **Versiyon Kontrol:** Git (GitHub veya GitLab kullanımı)
+
+---
+
+#### **2. Veritabanı Tasarımı**
+
+##### 2.1 Tablo Yapıları
+
+* **users**:
+
+  * `id`: INT, Primary Key, Auto Increment
+  * `name`: VARCHAR(255)
+  * `email`: VARCHAR(255), Unique
+  * `password`: VARCHAR(255)
+
+* **workout\_days**:
+
+  * `id`: INT, Primary Key, Auto Increment
+  * `user_id`: INT, Foreign Key
+  * `day_number`: INT (1, 2 veya 3)
+
+* **exercises**:
+
+  * `id`: INT, Primary Key, Auto Increment
+  * `workout_day_id`: INT, Foreign Key
+  * `name`: VARCHAR(255)
+
+* **exercise\_logs**:
+
+  * `id`: INT, Primary Key, Auto Increment
+  * `exercise_id`: INT, Foreign Key
+  * `date`: DATE
+  * `weight`: FLOAT
+  * `sets`: INT
+  * `reps`: INT
+
+##### 2.2 Veritabanı İlişkileri
+
+* `users` -> `workout_days`: 1-N
+* `workout_days` -> `exercises`: 1-N
+* `exercises` -> `exercise_logs`: 1-N
+
+---
+
+#### **3. Backend Geliştirme**
+
+##### 3.1 API Uç Noktalarının Tasarımı
+
+* **Kullanıcı Yönetimi:**
+
+  * `POST /register`: Kullanıcı kaydı
+  * `POST /login`: Kullanıcı girişi
+* **Antrenman Yönetimi:**
+
+  * `POST /workouts`: Yeni gün ekleme
+  * `POST /workouts/{day_id}/exercises`: Yeni hareket ekleme
+  * `GET /workouts/{day_id}`: Günün hareketlerini görüntüleme
+  * `POST /exercises/{exercise_id}/logs`: Set, tekrar ve ağırlık ekleme
+  * `GET /exercises/{exercise_id}/logs`: Antrenman geçmişini görüntüleme
+* **Tavsiyeler:**
+
+  * `POST /recommendations`: OpenAI API üzerinden öneri alma
+
+##### 3.2 Backend İşlevselliklerinin Kodlanması
+
+* Laravel kullanıyorsanız model, controller, ve migration dosyalarını oluşturun.
+* API doğrulama ve kullanıcı yetkilendirme için `sanctum` veya `passport` kullanabilirsiniz.
+
+---
+
+#### **4. Frontend Geliştirme**
+
+##### 4.1 Kullanıcı Arayüzü
+
+* **Dashboard Sayfası:**
+
+  * Günleri listeleme (1. Gün, 2. Gün, 3. Gün)
+  * Hareket ekleme/güncelleme butonları
+* **Hareket Sayfası:**
+
+  * Seçili günün hareketlerini listeleme
+  * Yeni set/tekrar/ağırlık ekleme formu
+* **Geçmiş Sayfası:**
+
+  * Hareketin geçmiş set/tekrar/ağırlık bilgilerini tablo halinde gösterme
+
+##### 4.2 Responsive Tasarım
+
+* Tailwind CSS veya Bootstrap kullanarak mobil uyumlu bir tasarım oluşturun.
+
+---
+
+#### **5. OpenAI Entegrasyonu**
+
+##### 5.1 OpenAI API Anahtarını Alın
+
+* OpenAI'nin resmi web sitesinden bir API anahtarı edinin.
+
+##### 5.2 API Bağlantısı
+
+* PHP'de OpenAI API'ye erişmek için `curl` veya bir PHP istemci kütüphanesi (ör. Guzzle) kullanın.
+
+##### 5.3 Öneri Servisi
+
+* Kullanıcının antrenman geçmişine göre ağırlık/set tavsiyeleri oluşturmak için bir istek yapın:
+
+  ```php
+  $response = $client->post('https://api.openai.com/v1/completions', [
+      'headers' => [
+          'Authorization' => 'Bearer YOUR_API_KEY',
+      ],
+      'json' => [
+          'prompt' => 'User data: ... Suggest the next step.',
+          'model' => 'text-davinci-003',
+          'max_tokens' => 150,
+      ],
+  ]);
+  ```
+
+---
+
+#### **6. Test ve Hata Ayıklama**
+
+##### 6.1 Backend Testleri
+
+* API uç noktalarını Postman veya Insomnia ile test edin.
+* Hatalı istekler için hata mesajlarını kontrol edin.
+
+##### 6.2 Frontend Testleri
+
+* Tarayıcı uyumluluğunu kontrol edin.
+* Form doğrulama ve veri işleme işlevlerini test edin.
+
+##### 6.3 Yük Testleri
+
+* Veritabanı ve API uç noktalarını yüksek yük altında test edin.
+
+---
+
+#### **7. Dağıtım**
+
+##### 7.1 Sunucu Hazırlığı
+
+* PHP, MySQL, ve bir web sunucusu (Apache veya Nginx) yapılandırmasını yapın.
+* Laravel kullanıyorsanız `artisan migrate` ve `artisan serve` komutlarını çalıştırın.
+
+##### 7.2 Güvenlik
+
+* Kullanıcı verilerini korumak için SSL sertifikası ekleyin.
+* Hassas verileri şifrelemek için Laravel'in `bcrypt` veya `argon2` özelliklerini kullanın.
+
+##### 7.3 Sürüm Kontrolü
+
+* Git kullanarak kodunuzu bir versiyon kontrol sisteminde saklayın.
+* CI/CD entegrasyonu düşünün.
+
+---
+
+#### **8. Geliştirme Sonrası İyileştirme**
+
+* Kullanıcı geri bildirimlerine göre yeni özellikler ekleyin.
+* Veritabanı sorgularını optimize edin.
+* Antrenman geçmişini analiz eden raporlar veya grafikler ekleyin.
+
+---
+
+Bu yol haritası projeyi adım adım oluşturmanıza yardımcı olacak şekilde düzenlenmiştir. Her adımda belirli bir hedefe ulaşarak uygulamanızın eksiksiz bir şekilde geliştirilmesini sağlayabilirsiniz.
