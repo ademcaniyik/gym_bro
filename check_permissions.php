@@ -2,6 +2,8 @@
 
 
 // Kontrol edilecek klasör yolu
+// Kontrol edilecek klasör yolu
+// Kontrol edilecek klasör yolu
 $directory = '/home/acd1f4ftwarecom/acdisoftware.online/gym_bro/vendor';
 
 // Fonksiyon izinleri kontrol eder
