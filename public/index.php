@@ -2,8 +2,6 @@
 require __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
-
-
 // .env dosyasını yükle
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
