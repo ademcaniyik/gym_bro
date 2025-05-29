@@ -1,11 +1,11 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-//deneme satırı
-//deneme satırı
+//bakalım bakalım
 use Dotenv\Dotenv;
 // .env dosyasını yükle
 $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->load();
+
 
 if (!file_exists(__DIR__ . '/../.env')) {
     die('Error: .env file is missing in the project root directory.');
