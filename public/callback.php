@@ -14,6 +14,9 @@ if (!$clientId || !$clientSecret || !$redirectUri) {
     die('Google OAuth config missing!');
 }
 
+session_start();
+
+
 // Örneğin Google Client oluşturma
 $client = new Google_Client();
 $client->setClientId($clientId);
