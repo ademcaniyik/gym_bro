@@ -1,18 +1,22 @@
-<?php 
+<?php
+
 namespace App\Helpers;
 
 use PDO;
 use PDOException;
 use Dotenv\Dotenv;
 
-class Database {
+class Database
+{
     private static $instance = null;
 
-    private function __construct() {
+    private function __construct()
+    {
         // Singleton: dışarıdan nesne oluşturmayı engelle
     }
 
-    public static function getConnection() {
+    public static function getConnection()
+    {
         if (self::$instance === null) {
             try {
                 // Dotenv'i başlat ve yükle
@@ -24,7 +28,8 @@ class Database {
                 self::$instance = new PDO($dsn, $_ENV['DB_USER'], $_ENV['DB_PASSWORD']);
                 self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             } catch (PDOException $e) {
-                die("Database connection failed: " . $e->getMessage());
+                file_put_contents(__DIR__ . '/error_log.txt', $e->getMessage(), FILE_APPEND);
+                die("Database connection failed. Check error_log.txt for details.");
             }
         }
         return self::$instance;
