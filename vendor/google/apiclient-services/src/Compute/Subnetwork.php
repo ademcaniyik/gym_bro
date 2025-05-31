@@ -19,7 +19,7 @@ namespace Google\Service\Compute;
 
 class Subnetwork extends \Google\Collection
 {
-  protected $collection_key = 'secondaryIpRanges';
+  protected $collection_key = 'systemReservedInternalIpv6Ranges';
   /**
    * @var string
    */
@@ -59,11 +59,19 @@ class Subnetwork extends \Google\Collection
   /**
    * @var string
    */
+  public $ipCollection;
+  /**
+   * @var string
+   */
   public $ipv6AccessType;
   /**
    * @var string
    */
   public $ipv6CidrRange;
+  /**
+   * @var string
+   */
+  public $ipv6GceEndpoint;
   /**
    * @var string
    */
@@ -116,6 +124,14 @@ class Subnetwork extends \Google\Collection
    * @var string
    */
   public $state;
+  /**
+   * @var string[]
+   */
+  public $systemReservedExternalIpv6Ranges;
+  /**
+   * @var string[]
+   */
+  public $systemReservedInternalIpv6Ranges;
 
   /**
    * @param string
@@ -246,6 +262,20 @@ class Subnetwork extends \Google\Collection
   /**
    * @param string
    */
+  public function setIpCollection($ipCollection)
+  {
+    $this->ipCollection = $ipCollection;
+  }
+  /**
+   * @return string
+   */
+  public function getIpCollection()
+  {
+    return $this->ipCollection;
+  }
+  /**
+   * @param string
+   */
   public function setIpv6AccessType($ipv6AccessType)
   {
     $this->ipv6AccessType = $ipv6AccessType;
@@ -270,6 +300,20 @@ class Subnetwork extends \Google\Collection
   public function getIpv6CidrRange()
   {
     return $this->ipv6CidrRange;
+  }
+  /**
+   * @param string
+   */
+  public function setIpv6GceEndpoint($ipv6GceEndpoint)
+  {
+    $this->ipv6GceEndpoint = $ipv6GceEndpoint;
+  }
+  /**
+   * @return string
+   */
+  public function getIpv6GceEndpoint()
+  {
+    return $this->ipv6GceEndpoint;
   }
   /**
    * @param string
@@ -466,6 +510,34 @@ class Subnetwork extends \Google\Collection
   public function getState()
   {
     return $this->state;
+  }
+  /**
+   * @param string[]
+   */
+  public function setSystemReservedExternalIpv6Ranges($systemReservedExternalIpv6Ranges)
+  {
+    $this->systemReservedExternalIpv6Ranges = $systemReservedExternalIpv6Ranges;
+  }
+  /**
+   * @return string[]
+   */
+  public function getSystemReservedExternalIpv6Ranges()
+  {
+    return $this->systemReservedExternalIpv6Ranges;
+  }
+  /**
+   * @param string[]
+   */
+  public function setSystemReservedInternalIpv6Ranges($systemReservedInternalIpv6Ranges)
+  {
+    $this->systemReservedInternalIpv6Ranges = $systemReservedInternalIpv6Ranges;
+  }
+  /**
+   * @return string[]
+   */
+  public function getSystemReservedInternalIpv6Ranges()
+  {
+    return $this->systemReservedInternalIpv6Ranges;
   }
 }
 
