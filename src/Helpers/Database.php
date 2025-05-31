@@ -20,7 +20,7 @@ class Database
         if (self::$instance === null) {
             try {
                 // Dotenv'i başlat ve yükle
-                $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+                $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
                 $dotenv->load();
 
                 // PDO bağlantısı
