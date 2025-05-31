@@ -8,7 +8,7 @@ use Dotenv\Dotenv;
 
 try {
     // 3. .env dosyasını yükle
-    $dotenv = Dotenv::createImmutable(__DIR__ . '/../'); // .env dosyası bir üst dizinde
+    $dotenv = Dotenv::createImmutable(__DIR__ . '/../../'); // .env dosyası bir üst dizinde
     $dotenv->load();
 
     // 4. .env dosyasından bir değişkeni oku ve ekrana yaz
