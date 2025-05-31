@@ -9,11 +9,11 @@ use App\Helpers\Database;
 
 try {
     $db = Database::getConnection();
-    $query = $db->query("SHOW TABLES");
-    $tables = $query->fetchAll(PDO::FETCH_ASSOC);
+    $query = $db->query("SELECT * FROM users");
+    $users = $query->fetchAll(PDO::FETCH_ASSOC);
 
-    echo "Veritabanındaki tablolar:<br>";
-    print_r($tables);
+    echo "Veritabanındaki kullanıcılar:<br>";
+    print_r($users);
 } catch (Exception $e) {
     $logFile = __DIR__ . '/error.log';
     $errorMessage = "[" . date('Y-m-d H:i:s') . "] " . $e->getMessage() . PHP_EOL;
