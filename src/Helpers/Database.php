@@ -19,6 +19,11 @@ class Database
     {
         if (self::$instance === null) {
             try {
+                // Autoload dosyasını yükle (yalnızca Dotenv bulunamazsa)
+                if (!class_exists(Dotenv::class)) {
+                    require_once __DIR__ . '/../../vendor/autoload.php';
+                }
+
                 // Dotenv'i başlat ve yükle
                 $dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
                 $dotenv->load();
