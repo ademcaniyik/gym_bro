@@ -17,6 +17,7 @@ $user = $_SESSION['user'];
     <h1>Hoş Geldiniz, <?php echo htmlspecialchars($user['name']); ?></h1>
     <img src="<?php echo htmlspecialchars($user['picture']); ?>" alt="Profile Picture">
     <p>Email: <?php echo htmlspecialchars($user['email']); ?></p>
+    <p>ID: <?php echo htmlspecialchars($user['id']); ?></p>
     <a href="logout.php">Çıkış Yap</a>
 </body>
 </html>
