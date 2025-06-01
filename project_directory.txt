@@ -1,7 +1,6 @@
 GYM_BRO/
 ├── public/
 │   ├── callback.php
-│   ├── db_taslak.php
 │   ├── index.php
 │   ├── logout.php
 │   └── profile.php
