@@ -21,25 +21,15 @@ $profilePic = htmlspecialchars($user['picture']);
         <div class="dashboard-actions">
             <a href="workout_list.php">Antrenman Planını Gör</a>
             <a href="workout.php">+ Yeni Antrenman Planı Oluştur</a>
-            <button id="start-workout-btn" class="primary-btn">Antremandayım</button>
+            <form action="workout_start.php" method="get" style="margin:0;">
+                <button type="submit" class="primary-btn">Antremandayım</button>
+            </form>
         </div>
         <a class="logout" href="logout.php">Çıkış Yap</a>
     </div>
-
     <!-- Gün seçimi için modal -->
-    <div id="day-select-modal" class="modal" style="display:none;">
-        <div class="modal-content">
-            <span class="close-modal" id="close-modal">&times;</span>
-            <h2>Hangi günün antrenmanını yapmak istiyorsun?</h2>
-            <form id="day-select-form" method="GET" action="workout_entry.php">
-                <select name="day" id="day-select" required>
-                    <!-- Günler JS ile yüklenecek -->
-                </select>
-                <button type="submit" class="primary-btn">Başla</button>
-            </form>
-        </div>
-    </div>
-    <script src="assets/dashboard.js"></script>
+    <!-- Modal ve ilgili JS kaldırıldı -->
+    <script>// Modal kaldırıldı, JS gereksiz</script>
 </body>
 
 </html>
