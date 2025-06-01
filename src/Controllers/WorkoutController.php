@@ -25,12 +25,9 @@ class WorkoutController
         $user = $_SESSION['user'];
         $success = null;
         $error = null;
-        if (isset($_POST['day'], $_POST['exercise'], $_POST['set'], $_POST['rep'], $_POST['weight'])) {
+        if (isset($_POST['day'], $_POST['exercise']) && is_array($_POST['exercise'])) {
             $day = trim($_POST['day']);
             $exercises = $_POST['exercise'];
-            $sets = $_POST['set'];
-            $reps = $_POST['rep'];
-            $weights = $_POST['weight'];
             try {
                 $db = Database::getConnection();
                 // Önce gün (workout) var mı kontrol et, yoksa ekle
@@ -48,21 +45,29 @@ class WorkoutController
                     $stmt2->execute();
                     $workout_id = $db->lastInsertId();
                 }
-                // Tüm hareketleri ekle
-                for ($i = 0; $i < count($exercises); $i++) {
-                    $exercise = trim($exercises[$i]);
-                    $set = (int)$sets[$i];
-                    $rep = (int)$reps[$i];
-                    $weight = (float)$weights[$i];
-                    $stmt3 = $db->prepare("INSERT INTO workout_exercises (workout_id, exercise, set_count, rep_count, weight) VALUES (:workout_id, :exercise, :set_count, :rep_count, :weight)");
+                // Her hareket için
+                foreach ($exercises as $ex) {
+                    $exName = trim($ex['name']);
+                    $stmt3 = $db->prepare("INSERT INTO workout_exercises (workout_id, exercise) VALUES (:workout_id, :exercise)");
                     $stmt3->bindParam(':workout_id', $workout_id);
-                    $stmt3->bindParam(':exercise', $exercise);
-                    $stmt3->bindParam(':set_count', $set);
-                    $stmt3->bindParam(':rep_count', $rep);
-                    $stmt3->bindParam(':weight', $weight);
+                    $stmt3->bindParam(':exercise', $exName);
                     $stmt3->execute();
+                    $exercise_id = $db->lastInsertId();
+                    // Her set için
+                    if (isset($ex['sets']) && is_array($ex['sets'])) {
+                        foreach ($ex['sets'] as $setIndex => $set) {
+                            $rep = (int)$set['rep'];
+                            $weight = (float)$set['weight'];
+                            $stmt4 = $db->prepare("INSERT INTO workout_sets (exercise_id, set_number, rep_count, weight) VALUES (:exercise_id, :set_number, :rep_count, :weight)");
+                            $stmt4->bindParam(':exercise_id', $exercise_id);
+                            $stmt4->bindParam(':set_number', $setIndex);
+                            $stmt4->bindParam(':rep_count', $rep);
+                            $stmt4->bindParam(':weight', $weight);
+                            $stmt4->execute();
+                        }
+                    }
                 }
-                $success = 'Tüm hareketler başarıyla kaydedildi!';
+                $success = 'Tüm hareket ve setler başarıyla kaydedildi!';
             } catch (\Exception $e) {
                 $error = 'Bir hata oluştu: ' . $e->getMessage();
             }
