@@ -9,6 +9,7 @@ GYM_BRO/
 │   ├── Controllers/
 │   │   ├── AuthController.php
 │   │   └── UserController.php
+│   │   └── WorkoutController.php
 │   ├── Helpers/
 │   │   ├── Database.php
 │   │   └── Utils.php
@@ -25,5 +26,7 @@ GYM_BRO/
 ├── .gitignore
 ├── composer.json
 ├── composer.lock
+├── composer.phar
+├── generate_autoload.php
 ├── README.md
 └── road_map.txt
