@@ -30,7 +30,7 @@ $profilePic = htmlspecialchars($user['picture']);
         <div class="dashboard-actions">
             <a href="workout.php">+ Yeni Antrenman Planı Oluştur</a>
             <a href="profile.php">Profilini Görüntüle</a>
-            <a href="#">Geçmiş Antrenmanlarını Gör</a>
+            <a href="workout_list.php">Oluşturduğun Antrenmanları Gör</a>
         </div>
         <a class="logout" href="logout.php">Çıkış Yap</a>
     </div>
