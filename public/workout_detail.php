@@ -53,8 +53,7 @@ $exercises = $stmt2->fetchAll(PDO::FETCH_ASSOC);
     <div class="container">
         <h1>Antrenman Planı Detay</h1>
         <div class="info">
-            <strong>Gün:</strong> <?=htmlspecialchars($plan['day_name'])?> <br>
-            <strong>Oluşturulma:</strong> <?=htmlspecialchars($plan['created_at'])?>
+            <strong> <?=htmlspecialchars($plan['day_name'])?> <br> </strong>
         </div>
         <table>
             <tr>
