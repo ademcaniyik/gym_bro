@@ -21,19 +21,7 @@ $workouts = $plans->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Antrenman Planlarım</title>
-    <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: #f4f6fa; margin: 0; }
-        .container { max-width: 700px; margin: 40px auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0001; padding: 32px; }
-        h1 { color: #333; text-align: center; }
-        .plan-list { margin-top: 24px; }
-        .plan-item { background: #f4f6fa; border-radius: 8px; margin-bottom: 18px; box-shadow: 0 1px 4px #0001; padding: 18px 24px; }
-        .plan-title { font-size: 1.2em; color: #2196f3; font-weight: 600; margin-bottom: 10px; }
-        .plan-link { color: #4caf50; text-decoration: none; font-weight: 500; }
-        .plan-link:hover { text-decoration: underline; }
-        .empty { color: #888; text-align: center; margin-top: 32px; }
-        .back { display: inline-block; margin-top: 24px; color: #2196f3; text-decoration: none; font-size: 1em; }
-        .back:hover { text-decoration: underline; }
-    </style>
+    <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
     <div class="container">
