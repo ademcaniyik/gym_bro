@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../src/Helpers/Database.php';
 
 use Dotenv\Dotenv;
 use App\Helpers\Database;
@@ -53,7 +54,7 @@ if (isset($_GET['code'])) {
         $stmt->bindParam(':email', $userInfo->email);
         $stmt->bindParam(':picture', $userInfo->picture);
         $stmt->execute();
-        
+
     } catch (Exception $e) {
         // Hata loglama
         $logFile = __DIR__ . '/error.log';
