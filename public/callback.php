@@ -47,12 +47,12 @@ if (isset($_GET['code'])) {
     try {
         $db = Database::getConnection();
         // Kullanıcıyı veritabanına kaydetme
-        $stmt = $db->prepare("INSERT INTO users (google_id, name, email, picture) VALUES (:google_id, :name, :email, :picture)
-                                  ON DUPLICATE KEY UPDATE name = :name, email = :email, picture = :picture");
+        $stmt = $db->prepare("INSERT INTO users (google_id, name, email, profile_picture) VALUES (:google_id, :name, :email, :profile_picture)
+                                  ON DUPLICATE KEY UPDATE name = :name, email = :email, profile_picture = :profile_picture");
         $stmt->bindParam(':google_id', $userInfo->id);
         $stmt->bindParam(':name', $userInfo->name);
         $stmt->bindParam(':email', $userInfo->email);
-        $stmt->bindParam(':picture', $userInfo->picture);
+        $stmt->bindParam(':profile_picture', $userInfo->picture);
         $stmt->execute();
 
     } catch (Exception $e) {
