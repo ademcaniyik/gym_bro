@@ -13,4 +13,15 @@ class UserController
         $user = $_SESSION['user'];
         include __DIR__ . '/../Views/profile.view.php';
     }
+
+    public function showDashboard()
+    {
+        session_start();
+        if (!isset($_SESSION['user'])) {
+            header('Location: index.php');
+            exit;
+        }
+        $user = $_SESSION['user'];
+        include __DIR__ . '/../Views/dashboard.view.php';
+    }
 }

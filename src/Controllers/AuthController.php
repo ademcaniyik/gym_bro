@@ -64,7 +64,7 @@ class AuthController
                 exit;
             }
 
-            header('Location: profile.php');
+            header('Location: dashboard.php');
             exit;
         }
     }

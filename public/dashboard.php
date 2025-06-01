@@ -1,9 +1,4 @@
 <?php
-session_start();
-if (!isset($_SESSION['user'])) {
-    header('Location: index.php');
-    exit;
-}
 require __DIR__ . '/../vendor/autoload.php';
 use App\Controllers\UserController;
 
