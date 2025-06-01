@@ -1,29 +1,9 @@
 <?php
 require __DIR__ . '/../vendor/autoload.php';
-//bakalım bakalım
-use Dotenv\Dotenv;
-// .env dosyasını yükle
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
+use App\Controllers\AuthController;
 
-
-if (!file_exists(__DIR__ . '/../.env')) {
-    die('Error: .env file is missing in the project root directory.');
-}
-
-
-session_start();
-
-// Google Client Configuration
-$client = new Google\Client();
-$client->setClientId($_ENV['GOOGLE_CLIENT_ID']); // .env'den gelen ID
-$client->setClientSecret($_ENV['GOOGLE_CLIENT_SECRET']); // .env'den gelen Secret
-$client->setRedirectUri($_ENV['GOOGLE_REDIRECT_URI']); // .env'den gelen Redirect URI
-$client->addScope('email');
-$client->addScope('profile');
-
-// Google Login URL
-$loginUrl = $client->createAuthUrl();
+$auth = new AuthController();
+$loginUrl = $auth->getLoginUrl();
 ?>
 <!DOCTYPE html>
 <html>
