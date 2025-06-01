@@ -1,14 +1,15 @@
 <?php
-// Komut satırı simülasyonu için exec fonksiyonu kullanılarak composer dump-autoload çalıştırılır.
 $output = [];
 $returnVar = null;
 
-exec('php composer.phar dump-autoload', $output, $returnVar);
+exec('php composer.phar dump-autoload 2>&1', $output, $returnVar);
+
+echo "Return code: $returnVar\n";
+echo "Output:\n" . implode("\n", $output);
 
 if ($returnVar === 0) {
     echo "Autoload dosyası başarıyla güncellendi.\n";
 } else {
-    echo "Autoload dosyası güncellenirken bir hata oluştu. Çıkış kodu: $returnVar\n";
-    echo implode("\n", $output);
+    echo "Autoload dosyası güncellenirken bir hata oluştu.\n";
 }
 ?>
