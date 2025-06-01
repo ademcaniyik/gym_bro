@@ -72,9 +72,12 @@ foreach ($exercises as $ex) {
                 <th>Kilo (kg)</th>
             </tr>
             <?php foreach ($exercises as $ex): ?>
+                <?php $first = true; $rowspan = count($exerciseSets[$ex['id']]); ?>
                 <?php foreach ($exerciseSets[$ex['id']] as $set): ?>
                 <tr>
-                    <td><?=htmlspecialchars($ex['exercise'])?></td>
+                    <?php if ($first): ?>
+                        <td rowspan="<?=$rowspan?>"><?=htmlspecialchars($ex['exercise'])?></td>
+                    <?php $first = false; endif; ?>
                     <td><?=($set['set_number']+1)?></td>
                     <td><?=htmlspecialchars($set['rep_count'])?></td>
                     <td><?=htmlspecialchars($set['weight'])?></td>
