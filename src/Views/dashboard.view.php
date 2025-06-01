@@ -19,12 +19,12 @@ $profilePic = htmlspecialchars($user['picture']);
         <h1>Hoş Geldin, <?= $userName ?>!</h1>
         <div class="welcome">GYM BRO'ya hoş geldin. Buradan antrenmanlarını planlayabilir ve gelişimini takip edebilirsin.</div>
         <div class="dashboard-actions">
+            <a href="workout_list.php">Antrenman Planını Gör</a>
+            <a href="workout.php">+ Yeni Antrenman Planı Oluştur</a>
+            <a href="progress_report.php">Gelişim Raporu</a>
             <form action="workout_start.php" method="get" style="margin:0;">
                 <button type="submit" class="primary-btn">Antremandayım</button>
             </form>
-            <a href="workout_list.php">Antrenman Planını Gör</a>
-            <a href="workout.php">+ Yeni Antrenman Planı Oluştur</a>
-
         </div>
         <a class="logout" href="logout.php">Çıkış Yap</a>
     </div>
