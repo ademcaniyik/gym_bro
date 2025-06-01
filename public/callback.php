@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php'; // Eğer composer autoload kullanıyorsan
+require __DIR__ . '/../vendor/autoload.php';
 
 use Dotenv\Dotenv;
 use App\Helpers\Database;
@@ -42,12 +42,26 @@ if (isset($_GET['code'])) {
         'picture' => $userInfo->picture,
     ];
 
-    // Kullanıcı bilgilerini veritabanına kaydetme işlemleri
-    $user = $_SESSION['user'];
 
-    $pdo = Database::getConnection();
-    $stmt = $pdo->prepare("INSERT INTO users (google_id, 'name', email, profile_picture) VALUES (:id, :'name', :email, :profile_picture) ON DUPLICATE KEY UPDATE name = :name");
-    $stmt->execute(['id' => $user['id'], 'name' => $user['name'], 'email' => $user['email'], 'profile_picture' => $user['picture']]);
+    try {
+        $db = Database::getConnection();
+        // Kullanıcıyı veritabanına kaydetme
+        $stmt = $db->prepare("INSERT INTO users (google_id, name, email, picture) VALUES (:google_id, :name, :email, :picture)
+                                  ON DUPLICATE KEY UPDATE name = :name, email = :email, picture = :picture");
+        $stmt->bindParam(':google_id', $userInfo->id);
+        $stmt->bindParam(':name', $userInfo->name);
+        $stmt->bindParam(':email', $userInfo->email);
+        $stmt->bindParam(':picture', $userInfo->picture);
+        $stmt->execute();
+        
+    } catch (Exception $e) {
+        // Hata loglama
+        $logFile = __DIR__ . '/error.log';
+        $errorMessage = "[" . date('Y-m-d H:i:s') . "] " . $e->getMessage() . PHP_EOL;
+        file_put_contents($logFile, $errorMessage, FILE_APPEND);
+        echo "Bir hata meydana geldi. Detaylar 'error.log' dosyasına yazıldı.";
+        exit;
+    }
 
     // Giriş sonrası sayfaya yönlendirme
     header('Location: profile.php');
