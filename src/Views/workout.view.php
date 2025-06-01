@@ -15,15 +15,18 @@ if (!isset($day)) $day = '';
         h1 { color: #333; }
         form { display: flex; flex-direction: column; gap: 14px; }
         label { font-weight: 500; color: #444; }
-        input[type=text], input[type=number] { padding: 8px; border-radius: 6px; border: 1px solid #bbb; font-size: 1em; }
+        input[type=text], input[type=number] { padding: 8px; border-radius: 6px; border: 1px solid #bbb; font-size: 1em; margin: 0 6px 0 0; }
         button { background: #4caf50; color: #fff; border: none; border-radius: 8px; padding: 12px; font-size: 1.1em; font-weight: 500; cursor: pointer; margin-top: 10px; }
+        button[type=button].remove-ex { background: #e53935; margin-left: 8px; padding: 8px 12px; font-size: 0.95em; }
+        button[type=button].remove-ex:hover { background: #b71c1c; }
         button:hover { background: #388e3c; }
         .back { display: inline-block; margin-top: 18px; color: #2196f3; text-decoration: none; font-size: 1em; }
         .back:hover { text-decoration: underline; }
         .success { color: #388e3c; margin-bottom: 10px; }
         .error { color: #e53935; margin-bottom: 10px; }
         .exercises { margin-bottom: 16px; }
-        .exercises label { color: #2196f3; }
+        .exercise-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; justify-content: center; }
+        .exercise-row input { flex: 1 1 120px; min-width: 90px; }
     </style>
     <script>
     function addExerciseRow() {
@@ -35,7 +38,7 @@ if (!isset($day)) $day = '';
             <input type="number" name="set[]" min="1" required placeholder="Set">
             <input type="number" name="rep[]" min="1" required placeholder="Tekrar">
             <input type="number" name="weight[]" min="0" step="0.1" required placeholder="Kilo (kg)">
-            <button type="button" onclick="this.parentNode.remove()">Kaldır</button>
+            <button type="button" class="remove-ex" onclick="this.parentNode.remove()">Kaldır</button>
         `;
         container.appendChild(row);
     }
