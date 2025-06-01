@@ -56,14 +56,17 @@ class WorkoutController
                     // Her set için
                     if (isset($ex['sets']) && is_array($ex['sets'])) {
                         foreach ($ex['sets'] as $setIndex => $set) {
-                            $rep = (int)$set['rep'];
-                            $weight = (float)$set['weight'];
-                            $stmt4 = $db->prepare("INSERT INTO workout_sets (exercise_id, set_number, rep_count, weight) VALUES (:exercise_id, :set_number, :rep_count, :weight)");
-                            $stmt4->bindParam(':exercise_id', $exercise_id);
-                            $stmt4->bindParam(':set_number', $setIndex);
-                            $stmt4->bindParam(':rep_count', $rep);
-                            $stmt4->bindParam(':weight', $weight);
-                            $stmt4->execute();
+                            $rep = isset($set['rep']) ? (int)$set['rep'] : 0;
+                            $weight = isset($set['weight']) ? (float)$set['weight'] : 0;
+                            // Eğer değerler boşsa, kaydetme
+                            if ($rep > 0) {
+                                $stmt4 = $db->prepare("INSERT INTO workout_sets (exercise_id, set_number, rep_count, weight) VALUES (:exercise_id, :set_number, :rep_count, :weight)");
+                                $stmt4->bindParam(':exercise_id', $exercise_id);
+                                $stmt4->bindParam(':set_number', $setIndex);
+                                $stmt4->bindParam(':rep_count', $rep);
+                                $stmt4->bindParam(':weight', $weight);
+                                $stmt4->execute();
+                            }
                         }
                     }
                 }
