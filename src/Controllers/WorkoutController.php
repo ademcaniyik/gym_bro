@@ -33,15 +33,30 @@ class WorkoutController
             $weight = (float)$_POST['weight'];
             try {
                 $db = Database::getConnection();
-                $stmt = $db->prepare("INSERT INTO workouts (user_id, day, exercise, set_count, rep_count, weight, created_at) VALUES (:user_id, :day, :exercise, :set_count, :rep_count, :weight, NOW())");
-                $stmt->bindParam(':user_id', $user['id']);
-                $stmt->bindParam(':day', $day);
-                $stmt->bindParam(':exercise', $exercise);
-                $stmt->bindParam(':set_count', $set);
-                $stmt->bindParam(':rep_count', $rep);
-                $stmt->bindParam(':weight', $weight);
+                // Önce gün (workout) var mı kontrol et, yoksa ekle
+                $stmt = $db->prepare("SELECT id FROM workouts WHERE user_id = :user_id AND day_name = :day_name");
+                $stmt->bindParam(':user_id', $user['db_id']);
+                $stmt->bindParam(':day_name', $day);
                 $stmt->execute();
-                $success = 'Antrenman planı başarıyla kaydedildi!';
+                $workout = $stmt->fetch(\PDO::FETCH_ASSOC);
+                if ($workout) {
+                    $workout_id = $workout['id'];
+                } else {
+                    $stmt2 = $db->prepare("INSERT INTO workouts (user_id, day_name, created_at) VALUES (:user_id, :day_name, NOW())");
+                    $stmt2->bindParam(':user_id', $user['db_id']);
+                    $stmt2->bindParam(':day_name', $day);
+                    $stmt2->execute();
+                    $workout_id = $db->lastInsertId();
+                }
+                // Şimdi hareketi ekle
+                $stmt3 = $db->prepare("INSERT INTO workout_exercises (workout_id, exercise, set_count, rep_count, weight) VALUES (:workout_id, :exercise, :set_count, :rep_count, :weight)");
+                $stmt3->bindParam(':workout_id', $workout_id);
+                $stmt3->bindParam(':exercise', $exercise);
+                $stmt3->bindParam(':set_count', $set);
+                $stmt3->bindParam(':rep_count', $rep);
+                $stmt3->bindParam(':weight', $weight);
+                $stmt3->execute();
+                $success = 'Antrenman hareketi başarıyla kaydedildi!';
             } catch (\Exception $e) {
                 $error = 'Bir hata oluştu: ' . $e->getMessage();
             }

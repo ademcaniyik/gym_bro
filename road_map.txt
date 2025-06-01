@@ -11,7 +11,7 @@ Kullanıcıların antrenmanlarını günlere bölerek planlayabilmesi, her gün 
 
 ### 2. Antrenman Planlama
 - [x] Kullanıcı, haftalık/günlük antrenman programı oluşturabilmeli (form ve kayıt işlemi tamamlandı)
-- [x] Her gün için hareket, set, tekrar, kilo planı ekleyebilmeli (form ve kayıt işlemi tamamlandı)
+- [x] Her gün için birden fazla hareket, set, tekrar, kilo planı ekleyebilmeli (tamamlandı)
 
 ### 3. Antrenman Takibi
 - [ ] Antrenman günü geldiğinde, yapılan set/tekrar/kilo bilgisini girebilmeli

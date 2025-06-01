@@ -47,22 +47,22 @@ class AuthController
                 'picture' => $userInfo->picture,
             ];
 
-            try {
-                $db = Database::getConnection();
-                $stmt = $db->prepare("INSERT INTO users (google_id, name, email, profile_picture) VALUES (:google_id, :name, :email, :profile_picture)
-                    ON DUPLICATE KEY UPDATE name = :name, email = :email, profile_picture = :profile_picture");
-                $stmt->bindParam(':google_id', $userInfo->id);
-                $stmt->bindParam(':name', $userInfo->name);
-                $stmt->bindParam(':email', $userInfo->email);
-                $stmt->bindParam(':profile_picture', $userInfo->picture);
-                $stmt->execute();
-            } catch (\Exception $e) {
-                $logFile = __DIR__ . '/../../public/error.log';
-                $errorMessage = "[" . date('Y-m-d H:i:s') . "] " . $e->getMessage() . PHP_EOL;
-                file_put_contents($logFile, $errorMessage, FILE_APPEND);
-                echo "Bir hata meydana geldi. Detaylar 'error.log' dosyasına yazıldı.";
-                exit;
-            }
+            // Kullanıcıyı veritabanına kaydet veya güncelle
+            $db = Database::getConnection();
+            $stmt = $db->prepare("INSERT INTO users (google_id, name, email, profile_picture) VALUES (:google_id, :name, :email, :profile_picture)
+                ON DUPLICATE KEY UPDATE name = :name, email = :email, profile_picture = :profile_picture");
+            $stmt->bindParam(':google_id', $userInfo->id);
+            $stmt->bindParam(':name', $userInfo->name);
+            $stmt->bindParam(':email', $userInfo->email);
+            $stmt->bindParam(':profile_picture', $userInfo->picture);
+            $stmt->execute();
+
+            // Kullanıcının veritabanındaki INT id'sini çek
+            $stmt2 = $db->prepare("SELECT id FROM users WHERE google_id = :google_id LIMIT 1");
+            $stmt2->bindParam(':google_id', $userInfo->id);
+            $stmt2->execute();
+            $dbUser = $stmt2->fetch(\PDO::FETCH_ASSOC);
+            $_SESSION['user']['db_id'] = $dbUser ? $dbUser['id'] : null;
 
             header('Location: dashboard.php');
             exit;
