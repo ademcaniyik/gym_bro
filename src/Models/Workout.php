@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Models;
+use App\Helpers\Database;
+use PDO;
 require __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../src/Helpers/Database.php';
 require_once __DIR__ . '/../src/Controllers/WorkoutController.php';
 
-use App\Helpers\Database;
-use PDO;
+
 
 class Workout
 {
