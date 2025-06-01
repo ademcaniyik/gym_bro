@@ -1,0 +1,177 @@
+# GYM BRO API Kullanım Kılavuzu
+
+## 0. Mobil Giriş (JWT ile)
+**URL:** /api/login.php
+**Yöntem:** POST
+**Açıklama:** Google ile giriş yapan mobil uygulama, Google'dan aldığı id_token'ı backend'e gönderir. Backend doğrulama yapar ve JWT döner.
+**İçerik Tipi:** application/json
+
+**Örnek İstek:**
+POST /api/login.php
+Content-Type: application/json
+
+**Body:**
+```
+{
+  "id_token": "GOOGLE_ID_TOKEN"
+}
+```
+
+**Yanıt:**
+```
+{
+  "token": "JWT_TOKEN",
+  "user": {
+    "id": 1,
+    "name": "Ad Soyad",
+    "email": "kullanici@email.com",
+    "picture": "https://..."
+  }
+}
+```
+
+---
+
+## 1. Kullanıcı Bilgisi
+**URL:** /api/user.php
+**Yöntem:** GET
+**Açıklama:** Oturumdaki kullanıcının temel bilgilerini döner.
+
+**Örnek İstek:**
+GET /api/user.php
+
+**Yanıt:**
+{
+  "id": 1,
+  "name": "Ad Soyad",
+  "email": "kullanici@email.com",
+  "picture": "https://..."
+}
+
+---
+
+## 2. Antrenman Planlarını Listele
+**URL:** /api/workouts.php
+**Yöntem:** GET
+**Açıklama:** Kullanıcının tüm antrenman planlarını listeler.
+
+**Örnek İstek:**
+GET /api/workouts.php
+
+**Yanıt:**
+[
+  { "id": 1, "day_name": "Pazartesi" },
+  { "id": 2, "day_name": "Çarşamba" }
+]
+
+---
+
+## 3. Yeni Antrenman Planı Oluştur
+**URL:** /api/workouts_post.php
+**Yöntem:** POST
+**Açıklama:** Yeni bir antrenman planı ve hareketlerini ekler.
+**İçerik Tipi:** application/json
+
+**Örnek İstek:**
+POST /api/workouts_post.php
+Content-Type: application/json
+
+**Body:**
+```
+{
+  "day": "Cuma",
+  "exercises": [
+    {
+      "name": "Bench Press",
+      "sets": [
+        { "rep": 10, "weight": 40 },
+        { "rep": 8, "weight": 45 }
+      ]
+    },
+    {
+      "name": "Squat",
+      "sets": [
+        { "rep": 12, "weight": 60 }
+      ]
+    }
+  ]
+}
+```
+
+**Yanıt:**
+{ "success": true, "workout_id": 3 }
+
+---
+
+## 4. Yapılan Antrenmanları (Logları) Listele
+**URL:** /api/workout_logs.php
+**Yöntem:** GET
+**Açıklama:** Kullanıcının yaptığı tüm antrenman kayıtlarını (loglarını) listeler.
+
+**Örnek İstek:**
+GET /api/workout_logs.php
+
+**Yanıt:**
+[
+  {
+    "id": 1,
+    "day_name": "Pazartesi",
+    "log_date": "2025-06-02 10:00:00",
+    "exercise": "Bench Press",
+    "set_number": 0,
+    "rep_count": 10,
+    "weight": 40
+  }
+]
+
+---
+
+## 5. Yeni Yapılan Antrenman Kaydı Ekle
+**URL:** /api/workout_logs_post.php
+**Yöntem:** POST
+**Açıklama:** Bir antrenman gününe ait yapılan tekrar/kilo bilgisini kaydeder.
+**İçerik Tipi:** application/json
+
+**Örnek İstek:**
+POST /api/workout_logs_post.php
+Content-Type: application/json
+
+**Body:**
+```
+{
+  "workout_id": 1,
+  "day_name": "Pazartesi",
+  "entries": {
+    "2": { "0": { "rep": 10, "weight": 40 }, "1": { "rep": 8, "weight": 45 } },
+    "3": { "0": { "rep": 12, "weight": 60 } }
+  }
+}
+```
+> Burada "2" ve "3" ilgili hareketlerin (exercise_id) id’sidir.
+
+**Yanıt:**
+{ "success": true, "log_id": 5 }
+
+---
+
+## 6. Gelişim Raporu (Hareket Bazında)
+**URL:** /api/progress.php?exercise=Bench%20Press
+**Yöntem:** GET
+**Açıklama:** Belirli bir hareket için zaman içindeki tekrar ve kilo gelişimini döner.
+
+**Örnek İstek:**
+GET /api/progress.php?exercise=Bench%20Press
+
+**Yanıt:**
+[
+  { "log_date": "2025-06-01 10:00:00", "rep_count": 10, "weight": 40 },
+  { "log_date": "2025-06-08 10:00:00", "rep_count": 12, "weight": 45 }
+]
+
+---
+
+## Genel Notlar
+- Tüm endpointler oturum (login) gerektirir. Giriş yapılmadan istek atılırsa 401 Unauthorized döner.
+- POST endpointlerinde veri application/json formatında gönderilmelidir.
+- Yanıtlar her zaman JSON formatındadır.
+- Test için Postman veya benzeri araçlar kullanabilirsiniz.
