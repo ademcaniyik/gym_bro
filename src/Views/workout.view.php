@@ -53,7 +53,7 @@ if (!isset($day)) $day = '';
         <?php if (isset($error)) echo '<div class="error">'.$error.'</div>'; ?>
         <form method="post" action="workout.php">
             <label>Gün:</label>
-            <input type="text" name="day" required placeholder="Pazartesi, Salı..." value="<?=htmlspecialchars($day)?>">
+            <input type="text" name="day" required placeholder="İtiş günü, Çekiş günü" value="<?=htmlspecialchars($day)?>">
             <div id="exercises" class="exercises"></div>
             <button type="button" onclick="addExerciseRow()">+ Hareket Ekle</button>
             <button type="submit">Planı Kaydet</button>
