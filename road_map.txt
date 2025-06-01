@@ -7,11 +7,11 @@ Kullanıcıların antrenmanlarını günlere bölerek planlayabilmesi, her gün 
 
 ### 1. Kullanıcı Girişi
 - [x] Google ile giriş (tamamlandı)
-- [ ] Kullanıcı oturum yönetimi ve profil sayfası
+- [x] Kullanıcı oturum yönetimi ve profil/dashboard ayrımı (tamamlandı)
 
 ### 2. Antrenman Planlama
-- [ ] Kullanıcı, haftalık/günlük antrenman programı oluşturabilmeli
-- [ ] Her gün için hareket, set, tekrar, kilo planı ekleyebilmeli
+- [x] Kullanıcı, haftalık/günlük antrenman programı oluşturabilmeli (form ve kayıt işlemi tamamlandı)
+- [x] Her gün için hareket, set, tekrar, kilo planı ekleyebilmeli (form ve kayıt işlemi tamamlandı)
 
 ### 3. Antrenman Takibi
 - [ ] Antrenman günü geldiğinde, yapılan set/tekrar/kilo bilgisini girebilmeli
