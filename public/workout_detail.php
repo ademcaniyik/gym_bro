@@ -16,7 +16,7 @@ if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
 $workout_id = (int)$_GET['id'];
 $db = Database::getConnection();
 // Planı ve hareketleri çek
-$stmt = $db->prepare("SELECT day_name, created_at FROM workouts WHERE id = :id AND user_id = :user_id");
+$stmt = $db->prepare("SELECT day_name FROM workouts WHERE id = :id AND user_id = :user_id");
 $stmt->bindParam(':id', $workout_id);
 $stmt->bindParam(':user_id', $user['db_id']);
 $stmt->execute();
@@ -25,10 +25,19 @@ if (!$plan) {
     echo 'Plan bulunamadı veya yetkiniz yok.';
     exit;
 }
-$stmt2 = $db->prepare("SELECT exercise, set_count, rep_count, weight FROM workout_exercises WHERE workout_id = :workout_id");
+// Hareketleri ve setlerini çek
+$stmt2 = $db->prepare("SELECT e.id, e.exercise FROM workout_exercises e WHERE e.workout_id = :workout_id");
 $stmt2->bindParam(':workout_id', $workout_id);
 $stmt2->execute();
 $exercises = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+// Her hareketin setlerini çek
+$exerciseSets = [];
+foreach ($exercises as $ex) {
+    $stmt3 = $db->prepare("SELECT set_number, rep_count, weight FROM workout_sets WHERE exercise_id = :exercise_id ORDER BY set_number ASC");
+    $stmt3->bindParam(':exercise_id', $ex['id']);
+    $stmt3->execute();
+    $exerciseSets[$ex['id']] = $stmt3->fetchAll(PDO::FETCH_ASSOC);
+}
 ?>
 <!DOCTYPE html>
 <html lang="tr">
@@ -63,12 +72,14 @@ $exercises = $stmt2->fetchAll(PDO::FETCH_ASSOC);
                 <th>Kilo (kg)</th>
             </tr>
             <?php foreach ($exercises as $ex): ?>
-            <tr>
-                <td><?=htmlspecialchars($ex['exercise'])?></td>
-                <td><?=htmlspecialchars($ex['set_count'])?></td>
-                <td><?=htmlspecialchars($ex['rep_count'])?></td>
-                <td><?=htmlspecialchars($ex['weight'])?></td>
-            </tr>
+                <?php foreach ($exerciseSets[$ex['id']] as $set): ?>
+                <tr>
+                    <td><?=htmlspecialchars($ex['exercise'])?></td>
+                    <td><?=($set['set_number']+1)?></td>
+                    <td><?=htmlspecialchars($set['rep_count'])?></td>
+                    <td><?=htmlspecialchars($set['weight'])?></td>
+                </tr>
+                <?php endforeach; ?>
             <?php endforeach; ?>
         </table>
         <a class="back" href="workout_list.php">&larr; Antrenman Listesine Dön</a>
