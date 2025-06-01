@@ -27,10 +27,10 @@ class WorkoutController
         $error = null;
         if (isset($_POST['day'], $_POST['exercise'], $_POST['set'], $_POST['rep'], $_POST['weight'])) {
             $day = trim($_POST['day']);
-            $exercise = trim($_POST['exercise']);
-            $set = (int)$_POST['set'];
-            $rep = (int)$_POST['rep'];
-            $weight = (float)$_POST['weight'];
+            $exercises = $_POST['exercise'];
+            $sets = $_POST['set'];
+            $reps = $_POST['rep'];
+            $weights = $_POST['weight'];
             try {
                 $db = Database::getConnection();
                 // Önce gün (workout) var mı kontrol et, yoksa ekle
@@ -48,15 +48,21 @@ class WorkoutController
                     $stmt2->execute();
                     $workout_id = $db->lastInsertId();
                 }
-                // Şimdi hareketi ekle
-                $stmt3 = $db->prepare("INSERT INTO workout_exercises (workout_id, exercise, set_count, rep_count, weight) VALUES (:workout_id, :exercise, :set_count, :rep_count, :weight)");
-                $stmt3->bindParam(':workout_id', $workout_id);
-                $stmt3->bindParam(':exercise', $exercise);
-                $stmt3->bindParam(':set_count', $set);
-                $stmt3->bindParam(':rep_count', $rep);
-                $stmt3->bindParam(':weight', $weight);
-                $stmt3->execute();
-                $success = 'Antrenman hareketi başarıyla kaydedildi!';
+                // Tüm hareketleri ekle
+                for ($i = 0; $i < count($exercises); $i++) {
+                    $exercise = trim($exercises[$i]);
+                    $set = (int)$sets[$i];
+                    $rep = (int)$reps[$i];
+                    $weight = (float)$weights[$i];
+                    $stmt3 = $db->prepare("INSERT INTO workout_exercises (workout_id, exercise, set_count, rep_count, weight) VALUES (:workout_id, :exercise, :set_count, :rep_count, :weight)");
+                    $stmt3->bindParam(':workout_id', $workout_id);
+                    $stmt3->bindParam(':exercise', $exercise);
+                    $stmt3->bindParam(':set_count', $set);
+                    $stmt3->bindParam(':rep_count', $rep);
+                    $stmt3->bindParam(':weight', $weight);
+                    $stmt3->execute();
+                }
+                $success = 'Tüm hareketler başarıyla kaydedildi!';
             } catch (\Exception $e) {
                 $error = 'Bir hata oluştu: ' . $e->getMessage();
             }
