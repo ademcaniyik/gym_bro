@@ -2,7 +2,7 @@
 $output = [];
 $returnVar = null;
 
-exec('php composer.phar dump-autoload 2>&1', $output, $returnVar);
+exec('HOME=/tmp php composer.phar dump-autoload 2>&1', $output, $returnVar);
 
 echo "Return code: $returnVar\n";
 echo "Output:\n" . implode("\n", $output);
