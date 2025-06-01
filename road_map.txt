@@ -1,0 +1,28 @@
+# GYM_BRO Yol Haritası (Roadmap)
+
+## Amaç
+Kullanıcıların antrenmanlarını günlere bölerek planlayabilmesi, her gün için hareket, set, tekrar ve kilo bilgisi girebilmesi; antrenman günü geldiğinde ise gerçek yapılan değerleri kaydedebilmesi ve gelişimini takip edebilmesi.
+
+## Yol Haritası
+
+### 1. Kullanıcı Girişi
+- [x] Google ile giriş (tamamlandı)
+- [ ] Kullanıcı oturum yönetimi ve profil sayfası
+
+### 2. Antrenman Planlama
+- [ ] Kullanıcı, haftalık/günlük antrenman programı oluşturabilmeli
+- [ ] Her gün için hareket, set, tekrar, kilo planı ekleyebilmeli
+
+### 3. Antrenman Takibi
+- [ ] Antrenman günü geldiğinde, yapılan set/tekrar/kilo bilgisini girebilmeli
+- [ ] Geçmiş antrenman kayıtlarını görebilmeli
+
+### 4. Gelişim Takibi
+- [ ] Kullanıcı, geçmiş antrenmanlarını ve gelişimini grafik/tablo ile görebilmeli
+
+### 5. Ekstra Özellikler
+- [ ] Kullanıcıya özel öneriler, istatistikler
+- [ ] Mobil uyumlu arayüz
+
+---
+Her adım tamamlandıkça bu dosya güncellenecek ve yeni görevler eklenecektir.

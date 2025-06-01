@@ -1,23 +1,6 @@
 <?php
-session_start();
+require __DIR__ . '/../vendor/autoload.php';
+use App\Controllers\UserController;
 
-if (!isset($_SESSION['user'])) {
-    header('Location: index.php');
-    exit;
-}
-
-$user = $_SESSION['user'];
-?>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Profil</title>
-</head>
-<body>
-    <h1>Hoş Geldiniz, <?php echo htmlspecialchars($user['name']); ?></h1>
-    <img src="<?php echo htmlspecialchars($user['picture']); ?>" alt="Profile Picture">
-    <p>Email: <?php echo htmlspecialchars($user['email']); ?></p>
-    <p>ID: <?php echo htmlspecialchars($user['id']); ?></p>
-    <a href="logout.php">Çıkış Yap</a>
-</body>
-</html>
+$controller = new UserController();
+$controller->showProfile();
