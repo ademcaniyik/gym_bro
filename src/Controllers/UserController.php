@@ -5,7 +5,9 @@ class UserController
 {
     public function showProfile()
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         if (!isset($_SESSION['user'])) {
             header('Location: index.php');
             exit;
@@ -16,7 +18,9 @@ class UserController
 
     public function showDashboard()
     {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         if (!isset($_SESSION['user'])) {
             header('Location: index.php');
             exit;
