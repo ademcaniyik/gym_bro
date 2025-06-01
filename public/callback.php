@@ -42,12 +42,11 @@ if (isset($_GET['code'])) {
         'picture' => $userInfo->picture,
     ];
 
-    // Kullanıcı bilgilerini veritabanına kaydetme işlemi burada yapılabilir
-    // callback.php'de kullanıcı bilgilerini veritabanına kaydet
+    // Kullanıcı bilgilerini veritabanına kaydetme işlemleri
     $user = $_SESSION['user'];
 
     $pdo = Database::getConnection();
-    $stmt = $pdo->prepare("INSERT INTO users (google_id, name, email, profile_picture) VALUES (:id, :name, :email, :profile_picture) ON DUPLICATE KEY UPDATE name = :name");
+    $stmt = $pdo->prepare("INSERT INTO users (google_id, 'name', email, profile_picture) VALUES (:id, :'name', :email, :profile_picture) ON DUPLICATE KEY UPDATE name = :name");
     $stmt->execute(['id' => $user['id'], 'name' => $user['name'], 'email' => $user['email'], 'profile_picture' => $user['picture']]);
 
     // Giriş sonrası sayfaya yönlendirme
