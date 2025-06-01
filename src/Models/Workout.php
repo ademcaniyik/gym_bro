@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Models;
+require __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../src/Helpers/Database.php';
 
 use App\Helpers\Database;
 use PDO;
