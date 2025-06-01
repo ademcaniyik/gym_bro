@@ -79,4 +79,17 @@ class WorkoutController
         }
         $this->showPlanForm($success, $error);
     }
+
+    /**
+     * Kullanıcının antrenman planındaki günleri (day_name) dizi olarak döndürür
+     */
+    public function getUserWorkoutDays($userId)
+    {
+        $db = Database::getConnection();
+        $stmt = $db->prepare("SELECT DISTINCT day_name FROM workouts WHERE user_id = :user_id ORDER BY id ASC");
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->execute();
+        $days = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+        return $days;
+    }
 }
