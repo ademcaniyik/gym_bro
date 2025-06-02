@@ -49,6 +49,7 @@ if (!isset($day)) $day = '';
     </script>
 </head>
 <body>
+    <button id="darkModeToggle" style="position:fixed;top:18px;right:18px;z-index:99;padding:8px 16px;border-radius:8px;border:none;background:#232a36;color:#fff;cursor:pointer;opacity:0.85;">🌙</button>
     <div class="plan-container">
         <h1>Yeni Antrenman Planı Oluştur</h1>
         <?php if (isset($success)) echo '<div class="success">'.$success.'</div>'; ?>
@@ -62,5 +63,24 @@ if (!isset($day)) $day = '';
         </form>
         <a class="back" href="dashboard.php">&larr; Dashboard'a Dön</a>
     </div>
+    <script>
+    // Dark mode toggle
+    const btn = document.getElementById('darkModeToggle');
+    btn.onclick = function() {
+      if(document.body.getAttribute('data-theme') === 'dark') {
+        document.body.removeAttribute('data-theme');
+        localStorage.removeItem('theme');
+        btn.textContent = '🌙';
+      } else {
+        document.body.setAttribute('data-theme','dark');
+        localStorage.setItem('theme','dark');
+        btn.textContent = '☀️';
+      }
+    };
+    if(localStorage.getItem('theme')==='dark') {
+      document.body.setAttribute('data-theme','dark');
+      btn.textContent = '☀️';
+    }
+    </script>
 </body>
 </html>

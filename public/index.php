@@ -17,6 +17,10 @@ $loginUrl = $auth->getLoginUrl();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GymBro - Akıllı Antrenman Takip Sistemi</title>
     <link rel="stylesheet" href="assets/style.css">
+    <style>
+    .landing-desc { color: var(--text-main, #1a2330); background: none; }
+    [data-theme="dark"] .landing-desc { color: #e3e9f7; }
+    </style>
 </head>
 <body class="landing-bg">
     <button id="darkModeToggle" style="position:fixed;top:18px;right:18px;z-index:99;padding:8px 16px;border-radius:8px;border:none;background:#232a36;color:#fff;cursor:pointer;opacity:0.85;">🌙</button>

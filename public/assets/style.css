@@ -308,9 +308,11 @@ body.landing-bg {
     letter-spacing: 0.03em;
 }
 .landing-desc {
-    color: #333;
-    font-size: 1.08em;
-    margin-bottom: 18px;
+    color: var(--text-main, #1a2330);
+    background: none;
+}
+[data-theme="dark"] .landing-desc {
+    color: #e3e9f7;
 }
 .features {
     text-align: left;
