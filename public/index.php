@@ -104,7 +104,7 @@ $loginUrl = $auth->getLoginUrl();
             <li>Mobil ve masaüstü uyumlu modern tasarım</li>
         </ul>
         <a href="<?php echo htmlspecialchars($loginUrl); ?>" class="google-btn">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" class="google-icon" alt="Google"> Google ile Giriş Yap
+            <img src="https://developers.google.com/identity/images/g-logo.png" class="google-icon" alt="Google" style="vertical-align:middle;display:inline-block;"> Google ile Giriş Yap
         </a>
     </div>
 </body>
