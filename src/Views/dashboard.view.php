@@ -25,8 +25,8 @@ $profilePic = htmlspecialchars($user['picture']);
             <form action="workout_start.php" method="get" style="margin:0;">
                 <button type="submit" class="primary-btn">Antremandayım</button>
             </form>
+            <a class="logout" href="logout.php">Çıkış Yap</a>
         </div>
-        <a class="logout" href="logout.php">Çıkış Yap</a>
     </div>
 </body>
 
