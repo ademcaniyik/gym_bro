@@ -52,12 +52,18 @@ $profilePic = htmlspecialchars($user['picture']);
     </div>
     <button id="darkModeToggle" class="darkmode-btn">🌙</button>
     <script>
-    // Sidebar toggle
+    // Sidebar toggle (mobil için de tam ekran açılır menü)
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
-    sidebarToggle.onclick = function() {
-      sidebar.classList.toggle('collapsed');
+    sidebarToggle.onclick = function(e) {
+      e.stopPropagation();
+      sidebar.classList.toggle('open');
     };
+    document.body.addEventListener('click', function(e) {
+      if(window.innerWidth <= 600 && sidebar.classList.contains('open')) {
+        if(!sidebar.contains(e.target)) sidebar.classList.remove('open');
+      }
+    });
     // Dark mode toggle
     const btn = document.getElementById('darkModeToggle');
     btn.onclick = function() {
