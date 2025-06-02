@@ -24,5 +24,34 @@ Kullanıcıların antrenmanlarını günlere bölerek planlayabilmesi, her gün 
 - [ ] Kullanıcıya özel öneriler, istatistikler
 - [ ] Mobil uyumlu arayüz
 
+## Dizin ve Kod Yapısı İncelemesi & Geliştirme Önerileri (2025-06-02)
+
+### Dizin ve Modülerlik
+- public/ altında tüm kullanıcıya açık sayfalar ve API endpointleri mantıklı, assets/style.css ile merkezi stil yönetimi sağlanıyor.
+- src/ altında Controllers, Models, Helpers, Views klasörleri ile MVC benzeri bir yapı var. Bu modülerlik iyi, ancak View dosyalarında hâlâ inline CSS ve eski dosyalar mevcut (ör: profile.view.php, workout.view.php). Bunlar sadeleştirilmeli ve tüm stiller style.css'e taşınmalı.
+- README.md neredeyse boş, proje kurulumu, temel kullanım ve API örnekleri eklenmeli.
+- public/api/ altında endpointler modüler, ancak bazı endpointler (ör: workouts_post.php vs workouts.php) birleştirilebilir veya daha RESTful bir yapıya kavuşturulabilir.
+- src/Models/ altında sadece User ve Workout var, ileride Exercise, Set, Log gibi modeller de eklenebilir.
+
+### Eksik veya Geliştirilebilecek Özellikler
+- [ ] Kullanıcı profil sayfası (profile.view.php) modernleştirilmeli ve merkezi CSS kullanılmalı.
+- [ ] Antrenman planı oluşturma ekranı (workout.view.php) inline CSS'ten arındırılmalı, style.css'e taşınmalı.
+- [ ] README.md dosyasına proje kurulumu, örnek API kullanımı ve ekran görüntüleri eklenmeli.
+- [ ] API endpointleri için JWT refresh token desteği ve daha gelişmiş hata yönetimi eklenebilir.
+- [ ] Antrenman geçmişi ve gelişim raporunda daha fazla filtre (tarih aralığı, hareket bazlı grafik, vs.)
+- [ ] Kullanıcıya özel öneriler (ör: son yapılanlara göre ağırlık/set önerisi, haftalık özet maili)
+- [ ] Sosyal özellikler: Arkadaş ekleme, antrenman paylaşımı, topluluk/leaderboard
+- [ ] Mobil uygulama için özel API endpointleri ve/veya PWA desteği
+- [ ] Çoklu dil desteği (i18n)
+- [x] Karanlık mod (dark mode) desteği
+- [ ] Test altyapısı (PHPUnit veya benzeri)
+- [ ] Otomatik yedekleme ve veri dışa aktarma (CSV/Excel)
+
+### Kod Temizliği ve Standartlar
+- [x] Tüm inline ve dosya içi CSS, assets/style.css'e taşınmalı (özellikle src/Views/*)
+- [x] Gereksiz veya kullanılmayan dosyalar (ör: eski view dosyaları) temizlenmeli
+- [x] Kodda açıklama ve PHPDoc standartları artırılmalı
+- [ ] API dökümantasyonu güncel tutulmalı
+
 ---
 Her adım tamamlandıkça bu dosya güncellenecek ve yeni görevler eklenecektir.

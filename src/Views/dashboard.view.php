@@ -1,4 +1,11 @@
-<?php // ...existing code...
+<?php
+/**
+ * Kullanıcı dashboard ekranı (Dashboard View)
+ * Kullanıcıya hoş geldin, profil ve ana aksiyonlar sunulur.
+ * Tüm stiller assets/style.css üzerinden alınır.
+ *
+ * @var array $user Kullanıcı oturum bilgileri
+ */
 // Kullanıcı giriş yaptıktan sonra karşılanacağı modern dashboard arayüzü
 $userName = htmlspecialchars($user['name']);
 $profilePic = htmlspecialchars($user['picture']);

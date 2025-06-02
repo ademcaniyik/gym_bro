@@ -1,4 +1,11 @@
 <?php
+/**
+ * Antrenman planı oluşturma ekranı (Workout Plan View)
+ * Kullanıcı yeni bir gün ve hareketler ekleyebilir.
+ * Tüm stiller assets/style.css üzerinden alınır.
+ *
+ * @var string $day Gün adı
+ */
 // workout.view.php
 // Bir güne birden fazla hareket ekleme desteği
 if (!isset($day)) $day = '';
@@ -40,11 +47,6 @@ if (!isset($day)) $day = '';
     }
     window.onload = function() { addExerciseRow(); };
     </script>
-    <style>
-    .set-row { display: flex; align-items: center; gap: 8px; margin: 4px 0; justify-content: center; }
-    .set-row input { width: 80px; }
-    .sets { margin-bottom: 8px; }
-    </style>
 </head>
 <body>
     <div class="plan-container">
