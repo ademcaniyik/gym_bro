@@ -45,6 +45,7 @@ foreach ($rows as $row) {
             <span class="sidebar-logo"><i class="fa-solid fa-dumbbell"></i> <span class="sidebar-logo-text">GymBro</span></span>
             <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
         </div>
+        <button id="darkModeToggle" class="darkmode-btn">🌙</button>
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
             <li><a href="workout_list.php"><i class="fa-solid fa-list"></i> <span>Planlarım</span></a></li>
