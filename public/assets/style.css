@@ -495,6 +495,19 @@ button.remove-ex:hover, .logout:hover {
   align-items: center;
   gap: 8px;
 }
+.sidebar-logo span {
+  display: inline;
+}
+.sidebar-logo i {
+  margin-right: 8px;
+}
+.sidebar.collapsed .sidebar-logo span {
+  display: none;
+}
+.sidebar.collapsed .sidebar-logo i {
+  margin-right: 0;
+  display: inline;
+}
 .sidebar-toggle {
   background: none;
   border: none;
