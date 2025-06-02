@@ -93,7 +93,7 @@ if (
         <h1 style="font-size:1.2em;margin-bottom:18px;"><?=htmlspecialchars($day)?> Antrenmanı</h1>
         <?php if (!empty($successMsg)) echo '<div class="success">'.$successMsg.'</div>'; ?>
         <?php foreach ($exercises as $ex): ?>
-            <form method="post" action="workout_entry.php?day=<?=urlencode($day)?>#ex<?=$ex['id'] ?>" class="exercise-row exercise-box wide-exercise-box" id="ex<?=$ex['id']?>">
+            <form method="post" action="workout_entry.php?day=<?=urlencode($day)?>#ex<?=$ex['id'] ?>" class="plan-container" id="ex<?=$ex['id']?>">
                 <div class="exercise-title"><?=htmlspecialchars($ex['exercise'])?></div>
                 <div class="sets">
                     <?php foreach ($exerciseSets[$ex['id']] as $set):
