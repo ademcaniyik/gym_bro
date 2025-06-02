@@ -618,13 +618,130 @@ button.remove-ex:hover, .logout:hover {
   font-size: 1.2em;
 }
 @media (max-width: 900px) {
-  .sidebar { width: 60px; }
-  .dashboard-main { margin-left: 60px; }
-  .sidebar:not(.collapsed) .sidebar-logo span,
-  .sidebar:not(.collapsed) .sidebar-menu span { display: none; }
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 60px;
+    min-width: 60px;
+    z-index: 100;
+  }
+  .dashboard-main {
+    margin-left: 60px;
+    padding: 16px 4vw 4vw 4vw;
+  }
+  .sidebar-header { padding: 12px 8px 8px 8px; }
 }
 @media (max-width: 600px) {
-  .dashboard-main { padding: 10px 2vw; }
-  .dashboard-card { padding: 18px 4vw; }
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0; bottom: 0;
+    width: 100vw;
+    min-width: 0;
+    height: 54px;
+    flex-direction: row;
+    align-items: center;
+    border-right: none;
+    border-bottom: 1.5px solid var(--border-main, #e3e8ee);
+    box-shadow: 0 2px 12px var(--shadow-main, #0001);
+    padding: 0;
+    transition: height 0.2s, width 0.2s;
+  }
+  .sidebar-header {
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+  }
+  .sidebar-menu {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 54px;
+    overflow-x: auto;
+    background: none;
+  }
+  .sidebar-menu li {
+    flex: 1 1 0;
+    min-width: 54px;
+    text-align: center;
+  }
+  .sidebar-menu a {
+    justify-content: center;
+    padding: 10px 0;
+    font-size: 1.1em;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+  }
+  .sidebar-menu a:hover, .sidebar-menu a.active {
+    background: var(--bg-accent, #f7fafd);
+    border-bottom: 3px solid var(--text-accent, #2196f3);
+    color: var(--text-accent, #2196f3);
+  }
+  .sidebar.collapsed {
+    width: 100vw;
+    min-width: 0;
+    height: 54px;
+  }
+  .sidebar-logo {
+    font-size: 1.1em;
+    gap: 4px;
+  }
+  .dashboard-main {
+    margin-left: 0;
+    margin-top: 54px;
+    padding: 10px 2vw 2vw 2vw;
+    min-width: 0;
+  }
+  .dashboard-card, .plan-container, .profile-container {
+    padding: 12px 2vw;
+    max-width: 99vw;
+    border-radius: 10px;
+    margin: 0 auto 18px auto;
+    box-sizing: border-box;
+  }
+  .dashboard-actions, .exercises {
+    gap: 10px;
+  }
+  .dashboard-actions a, .dashboard-actions button.primary-btn, button, .primary-btn {
+    width: 100%;
+    min-width: 0;
+    font-size: 1em;
+    padding: 12px 0;
+  }
+  input[type=text], input[type=number], .set-row input, .exercise-row input {
+    width: 100%;
+    min-width: 0;
+    font-size: 1em;
+    box-sizing: border-box;
+  }
+  .set-row, .exercise-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    padding: 6px 2px 6px 2px;
+  }
+  .set-row input[type=number], .primary-btn {
+    width: 100%;
+    min-width: 0;
+  }
+  .darkmode-btn {
+    top: 62px;
+    right: 10px;
+    font-size: 1.1em;
+    padding: 6px 12px;
+  }
+  .profile-pic {
+    width: 60px;
+    height: 60px;
+  }
+  h1, .landing-logo {
+    font-size: 1.1em;
+  }
 }
-/* === /Sidebar ve Modern Dashboard === */
+/* === /Mobil Responsive Düzeltmeler === */
