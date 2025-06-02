@@ -22,23 +22,7 @@ $profilePic = htmlspecialchars($user['picture']);
 </head>
 
 <body>
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <span class="sidebar-logo"><i class="fa-solid fa-dumbbell"></i> GymBro</span>
-            <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="dashboard.php"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
-            <li><a href="workout_list.php"><i class="fa-solid fa-list"></i> <span>Planlarım</span></a></li>
-            <li><a href="workout.php"><i class="fa-solid fa-plus"></i> <span>Plan Oluştur</span></a></li>
-            <li><a href="progress_report.php"><i class="fa-solid fa-chart-line"></i> <span>Gelişim Raporu</span></a></li>
-            <li><a href="logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i> <span>Çıkış Yap</span></a></li>
-        </ul>
-    </div>
-    <button class="sidebar-hamburger" id="sidebarHamburger" aria-label="Menüyü Aç/Kapat">
-      <span></span><span></span><span></span>
-    </button>
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <?php include __DIR__ . '/sidebar.view.php'; ?>
     <div class="dashboard-main">
         <div class="dashboard-card">
             <img src="<?= $profilePic ?>" alt="Profil Fotoğrafı" class="profile-pic">
