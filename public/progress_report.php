@@ -45,7 +45,6 @@ foreach ($rows as $row) {
             <span class="sidebar-logo"><i class="fa-solid fa-dumbbell"></i> <span class="sidebar-logo-text">GymBro</span></span>
             <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
         </div>
-        <button id="darkModeToggle" class="darkmode-btn">🌙</button>
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
             <li><a href="workout_list.php"><i class="fa-solid fa-list"></i> <span>Planlarım</span></a></li>
@@ -79,125 +78,9 @@ foreach ($rows as $row) {
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-    // Sidebar toggle (mobil ve masaüstü)
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const sidebarHamburger = document.getElementById('sidebarHamburger');
-    const sidebarOverlay = document.getElementById('sidebarOverlay');
-    // Masaüstü: daralt/aç
-    sidebarToggle.onclick = function(e) {
-      e.stopPropagation();
-      if(window.innerWidth > 600) {
-        sidebar.classList.toggle('collapsed');
-      } else {
-        sidebar.classList.toggle('open');
-        sidebarOverlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
-      }
-      updateSidebarLogo();
-    };
-    // Mobil: hamburger ile aç/kapat
-    sidebarHamburger.onclick = function(e) {
-      e.stopPropagation();
-      sidebar.classList.add('open');
-      sidebarOverlay.style.display = 'block';
-      updateSidebarLogo();
-    };
-    // Overlay veya dışarı tıklayınca kapat
-    sidebarOverlay.onclick = function() {
-      sidebar.classList.remove('open');
-      sidebarOverlay.style.display = 'none';
-      updateSidebarLogo();
-    };
-    document.body.addEventListener('click', function(e) {
-      if(window.innerWidth <= 600 && sidebar.classList.contains('open')) {
-        if(!sidebar.contains(e.target) && !sidebarHamburger.contains(e.target)) {
-          sidebar.classList.remove('open');
-          sidebarOverlay.style.display = 'none';
-          updateSidebarLogo();
-        }
-      }
-    });
-    // Sidebar logo yazısı kontrolü
-    function updateSidebarLogo() {
-      const logoText = document.querySelector('.sidebar-logo-text');
-      if (!logoText) return;
-      if ((window.innerWidth <= 600 && !sidebar.classList.contains('open')) || (window.innerWidth > 600 && sidebar.classList.contains('collapsed'))) {
-        logoText.style.display = 'none';
-      } else {
-        logoText.style.display = '';
-      }
-    }
-    window.addEventListener('resize', updateSidebarLogo);
-    updateSidebarLogo();
-    // Dark mode toggle
-    const btn = document.getElementById('darkModeToggle');
-    btn.onclick = function() {
-      if(document.body.getAttribute('data-theme') === 'dark') {
-        document.body.removeAttribute('data-theme');
-        localStorage.removeItem('theme');
-        btn.textContent = '🌙';
-      } else {
-        document.body.setAttribute('data-theme','dark');
-        localStorage.setItem('theme','dark');
-        btn.textContent = '☀️';
-      }
-    };
-    if(localStorage.getItem('theme')==='dark') {
-      document.body.setAttribute('data-theme','dark');
-      btn.textContent = '☀️';
-    }
-    // Chart.js kodu (değişmedi)
-    const allData = <?=json_encode($data)?>;
-    const select = document.getElementById('exercise-select');
-    const ctx = document.getElementById('progressChart').getContext('2d');
-    let chart;
-    function renderChart(exName) {
-        const exData = allData[exName] || {};
-        const labels = Object.keys(exData);
-        const weights = labels.map(date => {
-            // Aynı gün birden fazla set varsa en yüksek kilo
-            return Math.max(...exData[date].map(s => parseFloat(s.weight)));
-        });
-        const reps = labels.map(date => {
-            // Aynı gün birden fazla set varsa toplam tekrar
-            return exData[date].reduce((sum, s) => sum + parseInt(s.rep), 0);
-        });
-        if (chart) chart.destroy();
-        chart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels,
-                datasets: [
-                    {
-                        label: 'Kilo (kg)',
-                        data: weights,
-                        borderColor: '#2196f3',
-                        backgroundColor: 'rgba(33,150,243,0.1)',
-                        yAxisID: 'y',
-                    },
-                    {
-                        label: 'Toplam Tekrar',
-                        data: reps,
-                        borderColor: '#4caf50',
-                        backgroundColor: 'rgba(76,175,80,0.1)',
-                        yAxisID: 'y1',
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                interaction: { mode: 'index', intersect: false },
-                stacked: false,
-                plugins: { legend: { position: 'top' } },
-                scales: {
-                    y: { type: 'linear', display: true, position: 'left', title: { display: true, text: 'Kilo (kg)' } },
-                    y1: { type: 'linear', display: true, position: 'right', grid: { drawOnChartArea: false }, title: { display: true, text: 'Toplam Tekrar' } }
-                }
-            }
-        });
-    }
-    select.addEventListener('change', e => renderChart(e.target.value));
-    if (select.value) renderChart(select.value);
+      window.progressData = <?=json_encode($data)?>;
     </script>
+    <script src="assets/main.js"></script>
+    <script src="assets/progress_report.js"></script>
 </body>
 </html>

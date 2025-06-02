@@ -55,7 +55,6 @@ if (!isset($day)) $day = '';
             <span class="sidebar-logo"><i class="fa-solid fa-dumbbell"></i> GymBro</span>
             <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
         </div>
-        <button id="darkModeToggle" class="darkmode-btn">🌙</button>
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
             <li><a href="workout_list.php"><i class="fa-solid fa-list"></i> <span>Planlarım</span></a></li>
@@ -90,23 +89,6 @@ if (!isset($day)) $day = '';
     sidebarToggle.onclick = function() {
       sidebar.classList.toggle('collapsed');
     };
-    // Dark mode toggle
-    const btn = document.getElementById('darkModeToggle');
-    btn.onclick = function() {
-      if(document.body.getAttribute('data-theme') === 'dark') {
-        document.body.removeAttribute('data-theme');
-        localStorage.removeItem('theme');
-        btn.textContent = '🌙';
-      } else {
-        document.body.setAttribute('data-theme','dark');
-        localStorage.setItem('theme','dark');
-        btn.textContent = '☀️';
-      }
-    };
-    if(localStorage.getItem('theme')==='dark') {
-      document.body.setAttribute('data-theme','dark');
-      btn.textContent = '☀️';
-    }
     </script>
 </body>
 </html>
