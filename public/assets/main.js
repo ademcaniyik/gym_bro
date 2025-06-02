@@ -53,8 +53,8 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('resize', updateSidebarLogo);
   updateSidebarLogo();
   // Dark mode toggle
-  const btn = document.getElementById('darkModeToggle');
-  if (btn) {
+  // Tüm sayfalarda birden fazla darkModeToggle olabileceği için querySelectorAll ile hepsine event ekle
+  document.querySelectorAll('#darkModeToggle').forEach(function(btn) {
     btn.onclick = function() {
       if(document.body.getAttribute('data-theme') === 'dark') {
         document.body.removeAttribute('data-theme');
@@ -70,5 +70,5 @@ document.addEventListener('DOMContentLoaded', function() {
       document.body.setAttribute('data-theme','dark');
       btn.textContent = '☀️';
     }
-  }
+  });
 });
