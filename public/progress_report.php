@@ -30,32 +30,73 @@ foreach ($rows as $row) {
         'weight' => $row['weight']
     ];
 }
-?>
-<!DOCTYPE html>
+?><!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gelişim Raporu</title>
     <link rel="stylesheet" href="assets/style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Gelişim Raporu</h1>
-        <p>Her hareket için zaman içindeki kilo ve tekrar gelişimini aşağıda görebilirsin.</p>
-        <div>
-            <label for="exercise-select">Hareket Seç:</label>
-            <select id="exercise-select">
-                <?php foreach (array_keys($data) as $ex): ?>
-                    <option value="<?=htmlspecialchars($ex)?>"><?=htmlspecialchars($ex)?></option>
-                <?php endforeach; ?>
-            </select>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-logo"><i class="fa-solid fa-dumbbell"></i> GymBro</span>
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
         </div>
-        <canvas id="progressChart" height="100"></canvas>
-        <a class="back" href="dashboard.php">&larr; Dashboard'a Dön</a>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.php"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
+            <li><a href="workout_list.php"><i class="fa-solid fa-list"></i> <span>Planlarım</span></a></li>
+            <li><a href="workout.php"><i class="fa-solid fa-plus"></i> <span>Plan Oluştur</span></a></li>
+            <li><a href="progress_report.php" class="active"><i class="fa-solid fa-chart-line"></i> <span>Gelişim Raporu</span></a></li>
+            <li><a href="logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i> <span>Çıkış Yap</span></a></li>
+        </ul>
     </div>
+    <div class="dashboard-main">
+        <div class="dashboard-card">
+            <div class="container">
+                <h1>Gelişim Raporu</h1>
+                <p>Her hareket için zaman içindeki kilo ve tekrar gelişimini aşağıda görebilirsin.</p>
+                <div>
+                    <label for="exercise-select">Hareket Seç:</label>
+                    <select id="exercise-select">
+                        <?php foreach (array_keys($data) as $ex): ?>
+                            <option value="<?=htmlspecialchars($ex)?>"><?=htmlspecialchars($ex)?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <canvas id="progressChart" height="100"></canvas>
+                <a class="back" href="dashboard.php">&larr; Dashboard'a Dön</a>
+            </div>
+        </div>
+    </div>
+    <button id="darkModeToggle" class="darkmode-btn">🌙</button>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+    // Sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    sidebarToggle.onclick = function() {
+      sidebar.classList.toggle('collapsed');
+    };
+    // Dark mode toggle
+    const btn = document.getElementById('darkModeToggle');
+    btn.onclick = function() {
+      if(document.body.getAttribute('data-theme') === 'dark') {
+        document.body.removeAttribute('data-theme');
+        localStorage.removeItem('theme');
+        btn.textContent = '🌙';
+      } else {
+        document.body.setAttribute('data-theme','dark');
+        localStorage.setItem('theme','dark');
+        btn.textContent = '☀️';
+      }
+    };
+    if(localStorage.getItem('theme')==='dark') {
+      document.body.setAttribute('data-theme','dark');
+      btn.textContent = '☀️';
+    }
     const allData = <?=json_encode($data)?>;
     const select = document.getElementById('exercise-select');
     const ctx = document.getElementById('progressChart').getContext('2d');

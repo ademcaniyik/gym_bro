@@ -17,6 +17,7 @@ if (!isset($day)) $day = '';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Antrenman Planı Oluştur</title>
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script>
     function addExerciseRow() {
         const container = document.getElementById('exercises');
@@ -49,21 +50,42 @@ if (!isset($day)) $day = '';
     </script>
 </head>
 <body>
-    <button id="darkModeToggle" style="position:fixed;top:18px;right:18px;z-index:99;padding:8px 16px;border-radius:8px;border:none;background:#232a36;color:#fff;cursor:pointer;opacity:0.85;">🌙</button>
-    <div class="plan-container">
-        <h1>Yeni Antrenman Planı Oluştur</h1>
-        <?php if (isset($success)) echo '<div class="success">'.$success.'</div>'; ?>
-        <?php if (isset($error)) echo '<div class="error">'.$error.'</div>'; ?>
-        <form method="post" action="workout.php">
-            <label>Gün:</label>
-            <input type="text" name="day" required placeholder="İtiş günü, Çekiş günü" value="<?=htmlspecialchars($day)?>">
-            <div id="exercises" class="exercises"></div>
-            <button type="button" onclick="addExerciseRow()">+ Hareket Ekle</button>
-            <button type="submit">Planı Kaydet</button>
-        </form>
-        <a class="back" href="dashboard.php">&larr; Dashboard'a Dön</a>
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <span class="sidebar-logo"><i class="fa-solid fa-dumbbell"></i> GymBro</span>
+            <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.php"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
+            <li><a href="workout_list.php"><i class="fa-solid fa-list"></i> <span>Planlarım</span></a></li>
+            <li><a href="workout.php" class="active"><i class="fa-solid fa-plus"></i> <span>Plan Oluştur</span></a></li>
+            <li><a href="progress_report.php"><i class="fa-solid fa-chart-line"></i> <span>Gelişim Raporu</span></a></li>
+            <li><a href="logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i> <span>Çıkış Yap</span></a></li>
+        </ul>
     </div>
+    <div class="dashboard-main">
+        <div class="dashboard-card">
+            <h1>Yeni Antrenman Planı Oluştur</h1>
+            <?php if (isset($success)) echo '<div class="success">'.$success.'</div>'; ?>
+            <?php if (isset($error)) echo '<div class="error">'.$error.'</div>'; ?>
+            <form method="post" action="workout.php">
+                <label>Gün:</label>
+                <input type="text" name="day" required placeholder="İtiş günü, Çekiş günü" value="<?=htmlspecialchars($day)?>">
+                <div id="exercises" class="exercises"></div>
+                <button type="button" onclick="addExerciseRow()">+ Hareket Ekle</button>
+                <button type="submit">Planı Kaydet</button>
+            </form>
+            <a class="back" href="dashboard.php">&larr; Dashboard'a Dön</a>
+        </div>
+    </div>
+    <button id="darkModeToggle" class="darkmode-btn">🌙</button>
     <script>
+    // Sidebar toggle
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    sidebarToggle.onclick = function() {
+      sidebar.classList.toggle('collapsed');
+    };
     // Dark mode toggle
     const btn = document.getElementById('darkModeToggle');
     btn.onclick = function() {
