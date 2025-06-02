@@ -92,25 +92,23 @@ if (
     <div class="plan-container">
         <h1 style="font-size:1.2em;margin-bottom:18px;"><?=htmlspecialchars($day)?> Antrenmanı</h1>
         <?php if (!empty($successMsg)) echo '<div class="success">'.$successMsg.'</div>'; ?>
-        <form method="post" action="workout_entry.php?day=<?=urlencode($day)?>">
-            <?php foreach ($exercises as $ex): ?>
-                <div class="exercise-row exercise-box">
-                    <div class="exercise-title"><?=htmlspecialchars($ex['exercise'])?></div>
-                    <div class="sets">
-                        <?php foreach ($exerciseSets[$ex['id']] as $set):
-                            $last = isset($lastLogs[$ex['id']][$set['set_number']]) ? $lastLogs[$ex['id']][$set['set_number']] : null;
-                        ?>
-                            <form method="post" action="workout_entry.php?day=<?=urlencode($day)?>#ex<?=$ex['id']?>" class="set-row">
-                                <span class="set-label"><?=$set['set_number']+1?>.</span>
-                                <input type="number" name="entry[<?=$ex['id']?>][<?=$set['set_number']?>][rep]" min="1" required placeholder="<?=(isset($last['rep_count']) ? 'Son: '.$last['rep_count'] : $set['rep_count'])?>">
-                                <input type="number" name="entry[<?=$ex['id']?>][<?=$set['set_number']?>][weight]" min="0" step="0.1" required placeholder="<?=(isset($last['weight']) ? 'Son: '.$last['weight'] : $set['weight'])?>">
-                                <button type="submit" name="save_ex" value="<?=$ex['id']?>" class="primary-btn">Kaydet</button>
-                            </form>
-                        <?php endforeach; ?>
-                    </div>
+        <?php foreach ($exercises as $ex): ?>
+            <form method="post" action="workout_entry.php?day=<?=urlencode($day)?>#ex<?=$ex['id'] ?>" class="exercise-row exercise-box wide-exercise-box" id="ex<?=$ex['id']?>">
+                <div class="exercise-title"><?=htmlspecialchars($ex['exercise'])?></div>
+                <div class="sets">
+                    <?php foreach ($exerciseSets[$ex['id']] as $set):
+                        $last = isset($lastLogs[$ex['id']][$set['set_number']]) ? $lastLogs[$ex['id']][$set['set_number']] : null;
+                    ?>
+                        <div class="set-row">
+                            <span class="set-label"><?=$set['set_number']+1?>.</span>
+                            <input type="number" name="entry[<?=$ex['id']?>][<?=$set['set_number']?>][rep]" min="1" required placeholder="<?=(isset($last['rep_count']) ? 'Son: '.$last['rep_count'] : $set['rep_count'])?>">
+                            <input type="number" name="entry[<?=$ex['id']?>][<?=$set['set_number']?>][weight]" min="0" step="0.1" required placeholder="<?=(isset($last['weight']) ? 'Son: '.$last['weight'] : $set['weight'])?>">
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-            <?php endforeach; ?>
-        </form>
+                <button type="submit" name="save_ex" value="<?=$ex['id']?>" class="primary-btn">Tüm Setleri Kaydet</button>
+            </form>
+        <?php endforeach; ?>
         <a class="back" href="dashboard.php">&larr; Dashboard'a Dön</a>
     </div>
 </body>
