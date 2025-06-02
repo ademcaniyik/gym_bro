@@ -56,16 +56,18 @@ if (
     $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entry']) && is_array($_POST['entry']) && isset($_POST['save_ex'])
 ) {
     $exercise_id = (int)$_POST['save_ex'];
-    // Yeni log oluştur
-    $stmtLog = $db->prepare("INSERT INTO workout_logs (user_id, workout_id, day_name, log_date) VALUES (:user_id, :workout_id, :day_name, NOW())");
-    $stmtLog->bindParam(':user_id', $user['db_id']);
-    $stmtLog->bindParam(':workout_id', $workout_id);
-    $stmtLog->bindParam(':day_name', $day);
-    $stmtLog->execute();
-    $log_id = $db->lastInsertId();
-    // Sadece ilgili hareketin setlerini kaydet
-    if (isset($_POST['entry'][$exercise_id])) {
-        foreach ($_POST['entry'][$exercise_id] as $set_number => $values) {
+    // Sadece ilgili hareketin setleri POST ile gelmiş olmalı, diğerleri yok
+    $entry = $_POST['entry'][$exercise_id] ?? [];
+    if (!empty($entry)) {
+        // Yeni log oluştur
+        $stmtLog = $db->prepare("INSERT INTO workout_logs (user_id, workout_id, day_name, log_date) VALUES (:user_id, :workout_id, :day_name, NOW())");
+        $stmtLog->bindParam(':user_id', $user['db_id']);
+        $stmtLog->bindParam(':workout_id', $workout_id);
+        $stmtLog->bindParam(':day_name', $day);
+        $stmtLog->execute();
+        $log_id = $db->lastInsertId();
+        // Sadece ilgili hareketin setlerini kaydet
+        foreach ($entry as $set_number => $values) {
             $rep = isset($values['rep']) ? (int)$values['rep'] : null;
             $weight = isset($values['weight']) ? (float)$values['weight'] : null;
             $stmtSet = $db->prepare("INSERT INTO workout_log_sets (log_id, exercise_id, set_number, rep_count, weight) VALUES (:log_id, :exercise_id, :set_number, :rep_count, :weight)");
@@ -76,8 +78,8 @@ if (
             $stmtSet->bindParam(':weight', $weight);
             $stmtSet->execute();
         }
+        $successMsg = 'Hareket başarıyla kaydedildi!';
     }
-    $successMsg = 'Hareket başarıyla kaydedildi!';
 }
 ?>
 <!DOCTYPE html>
