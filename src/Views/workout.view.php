@@ -74,5 +74,6 @@ if (!isset($day)) $day = '';
       sidebar.classList.toggle('collapsed');
     };
     </script>
+    <script src="assets/main.js"></script>
 </body>
 </html>
