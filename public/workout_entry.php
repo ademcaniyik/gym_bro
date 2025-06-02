@@ -108,7 +108,7 @@ if (
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <button type="submit" name="save_ex" value="<?=$ex['id']?>" class="primary-btn">Tüm Setleri Kaydet</button>
+                <button type="submit" name="save_ex" value="<?=$ex['id']?>" class="primary-btn">Seti Kaydet</button>
             </form>
         <?php endforeach; ?>
         <a class="back" href="dashboard.php">&larr; Dashboard'a Dön</a>
