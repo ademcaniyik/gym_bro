@@ -42,9 +42,10 @@ foreach ($rows as $row) {
 <body>
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header">
-            <span class="sidebar-logo"><i class="fa-solid fa-dumbbell"></i> GymBro</span>
+            <span class="sidebar-logo"><i class="fa-solid fa-dumbbell"></i> <span class="sidebar-logo-text">GymBro</span></span>
             <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
         </div>
+        <button id="darkModeToggle" class="darkmode-btn">🌙</button>
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
             <li><a href="workout_list.php"><i class="fa-solid fa-list"></i> <span>Planlarım</span></a></li>
@@ -92,26 +93,42 @@ foreach ($rows as $row) {
         sidebar.classList.toggle('open');
         sidebarOverlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
       }
+      updateSidebarLogo();
     };
     // Mobil: hamburger ile aç/kapat
     sidebarHamburger.onclick = function(e) {
       e.stopPropagation();
       sidebar.classList.add('open');
       sidebarOverlay.style.display = 'block';
+      updateSidebarLogo();
     };
     // Overlay veya dışarı tıklayınca kapat
     sidebarOverlay.onclick = function() {
       sidebar.classList.remove('open');
       sidebarOverlay.style.display = 'none';
+      updateSidebarLogo();
     };
     document.body.addEventListener('click', function(e) {
       if(window.innerWidth <= 600 && sidebar.classList.contains('open')) {
         if(!sidebar.contains(e.target) && !sidebarHamburger.contains(e.target)) {
           sidebar.classList.remove('open');
           sidebarOverlay.style.display = 'none';
+          updateSidebarLogo();
         }
       }
     });
+    // Sidebar logo yazısı kontrolü
+    function updateSidebarLogo() {
+      const logoText = document.querySelector('.sidebar-logo-text');
+      if (!logoText) return;
+      if ((window.innerWidth <= 600 && !sidebar.classList.contains('open')) || (window.innerWidth > 600 && sidebar.classList.contains('collapsed'))) {
+        logoText.style.display = 'none';
+      } else {
+        logoText.style.display = '';
+      }
+    }
+    window.addEventListener('resize', updateSidebarLogo);
+    updateSidebarLogo();
     // Dark mode toggle
     const btn = document.getElementById('darkModeToggle');
     btn.onclick = function() {

@@ -499,12 +499,17 @@ button.remove-ex:hover, .logout:hover {
 .sidebar-logo span {
   display: inline;
 }
-.sidebar.collapsed .sidebar-logo span {
-  display: none;
-}
-.sidebar.collapsed .sidebar-logo i {
+.sidebar-logo-text {
   display: inline;
-  margin-right: 0;
+  transition: opacity 0.2s;
+}
+@media (max-width: 600px) {
+  .sidebar:not(.open) .sidebar-logo-text {
+    display: none !important;
+  }
+}
+.sidebar.collapsed .sidebar-logo-text {
+  display: none !important;
 }
 .sidebar-toggle {
   background: none;
