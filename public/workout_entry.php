@@ -38,10 +38,24 @@ foreach ($exercises as $ex) {
     $stmt3->execute();
     $exerciseSets[$ex['id']] = $stmt3->fetchAll(PDO::FETCH_ASSOC);
 }
+// Son yapılan antrenmanlardan, her hareket için en son logu çek
+$lastLogs = [];
+foreach ($exercises as $ex) {
+    $stmtLast = $db->prepare("SELECT s.set_number, s.rep_count, s.weight FROM workout_logs l
+        JOIN workout_log_sets s ON l.id = s.log_id
+        WHERE l.user_id = :user_id AND l.workout_id = :workout_id AND s.exercise_id = :exercise_id
+        ORDER BY l.log_date DESC, l.id DESC, s.set_number ASC");
+    $stmtLast->bindParam(':user_id', $user['db_id']);
+    $stmtLast->bindParam(':workout_id', $workout_id);
+    $stmtLast->bindParam(':exercise_id', $ex['id']);
+    $stmtLast->execute();
+    $lastLogs[$ex['id']] = $stmtLast->fetchAll(PDO::FETCH_ASSOC);
+}
 // --- YAPILAN ANTRENMANI KAYDETME ---
 if (
-    $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entry']) && is_array($_POST['entry'])
+    $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['entry']) && is_array($_POST['entry']) && isset($_POST['save_ex'])
 ) {
+    $exercise_id = (int)$_POST['save_ex'];
     // Yeni log oluştur
     $stmtLog = $db->prepare("INSERT INTO workout_logs (user_id, workout_id, day_name, log_date) VALUES (:user_id, :workout_id, :day_name, NOW())");
     $stmtLog->bindParam(':user_id', $user['db_id']);
@@ -49,9 +63,9 @@ if (
     $stmtLog->bindParam(':day_name', $day);
     $stmtLog->execute();
     $log_id = $db->lastInsertId();
-    // Her hareket ve set için yapılanları kaydet
-    foreach ($_POST['entry'] as $exercise_id => $sets) {
-        foreach ($sets as $set_number => $values) {
+    // Sadece ilgili hareketin setlerini kaydet
+    if (isset($_POST['entry'][$exercise_id])) {
+        foreach ($_POST['entry'][$exercise_id] as $set_number => $values) {
             $rep = isset($values['rep']) ? (int)$values['rep'] : null;
             $weight = isset($values['weight']) ? (float)$values['weight'] : null;
             $stmtSet = $db->prepare("INSERT INTO workout_log_sets (log_id, exercise_id, set_number, rep_count, weight) VALUES (:log_id, :exercise_id, :set_number, :rep_count, :weight)");
@@ -63,7 +77,7 @@ if (
             $stmtSet->execute();
         }
     }
-    $successMsg = 'Antrenman başarıyla kaydedildi!';
+    $successMsg = 'Hareket başarıyla kaydedildi!';
 }
 ?>
 <!DOCTYPE html>
@@ -88,17 +102,21 @@ if (
                 <div class="exercise-row">
                     <strong><?=htmlspecialchars($ex['exercise'])?></strong>
                     <div class="sets">
-                        <?php foreach ($exerciseSets[$ex['id']] as $set): ?>
+                        <?php foreach ($exerciseSets[$ex['id']] as $set):
+                            $last = isset($lastLogs[$ex['id']][$set['set_number']]) ? $lastLogs[$ex['id']][$set['set_number']] : null;
+                        ?>
+                            <form method="post" action="workout_entry.php?day=<?=urlencode($day)?>#ex<?=$ex['id']?>
                             <div class="set-row">
                                 <span><?=$set['set_number']+1?>. set:</span>
-                                <input type="number" name="entry[<?=$ex['id']?>][<?=$set['set_number']?>][rep]" min="1" required placeholder="<?=$set['rep_count']?>">
-                                <input type="number" name="entry[<?=$ex['id']?>][<?=$set['set_number']?>][weight]" min="0" step="0.1" required placeholder="<?=$set['weight']?>">
+                                <input type="number" name="entry[<?=$ex['id']?>][<?=$set['set_number']?>][rep]" min="1" required placeholder="<?=(isset($last['rep_count']) ? 'Son: '.$last['rep_count'] : $set['rep_count'])?>">
+                                <input type="number" name="entry[<?=$ex['id']?>][<?=$set['set_number']?>][weight]" min="0" step="0.1" required placeholder="<?=(isset($last['weight']) ? 'Son: '.$last['weight'] : $set['weight'])?>">
+                                <button type="submit" name="save_ex" value="<?=$ex['id']?>" class="primary-btn">Kaydet</button>
                             </div>
+                            </form>
                         <?php endforeach; ?>
                     </div>
                 </div>
             <?php endforeach; ?>
-            <button type="submit">Kaydet</button>
         </form>
         <a class="back" href="dashboard.php">&larr; Dashboard'a Dön</a>
     </div>
