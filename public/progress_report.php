@@ -76,7 +76,6 @@ foreach ($rows as $row) {
             </div>
         </div>
     </div>
-    <button id="darkModeToggle" class="darkmode-btn">🌙</button>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
     // Sidebar toggle (mobil ve masaüstü)

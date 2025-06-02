@@ -29,6 +29,7 @@ $workouts = $plans->fetchAll(PDO::FETCH_ASSOC);
             <span class="sidebar-logo"><i class="fa-solid fa-dumbbell"></i> GymBro</span>
             <button class="sidebar-toggle" id="sidebarToggle"><i class="fa-solid fa-bars"></i></button>
         </div>
+        <button id="darkModeToggle" class="darkmode-btn">🌙</button>
         <ul class="sidebar-menu">
             <li><a href="dashboard.php"><i class="fa-solid fa-house"></i> <span>Dashboard</span></a></li>
             <li><a href="workout_list.php" class="active"><i class="fa-solid fa-list"></i> <span>Planlarım</span></a></li>
@@ -37,6 +38,10 @@ $workouts = $plans->fetchAll(PDO::FETCH_ASSOC);
             <li><a href="logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i> <span>Çıkış Yap</span></a></li>
         </ul>
     </div>
+    <button class="sidebar-hamburger" id="sidebarHamburger" aria-label="Menüyü Aç/Kapat">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="dashboard-main">
         <div class="dashboard-card">
             <h1>Antrenman Planlarım</h1>
@@ -55,7 +60,6 @@ $workouts = $plans->fetchAll(PDO::FETCH_ASSOC);
             <a class="back" href="dashboard.php">&larr; Dashboard'a Dön</a>
         </div>
     </div>
-    <button id="darkModeToggle" class="darkmode-btn">🌙</button>
     <script>
     // Sidebar toggle
     const sidebar = document.getElementById('sidebar');

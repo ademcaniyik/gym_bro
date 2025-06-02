@@ -35,6 +35,10 @@ $profilePic = htmlspecialchars($user['picture']);
             <li><a href="logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i> <span>Çıkış Yap</span></a></li>
         </ul>
     </div>
+    <button class="sidebar-hamburger" id="sidebarHamburger" aria-label="Menüyü Aç/Kapat">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="dashboard-main">
         <div class="dashboard-card">
             <img src="<?= $profilePic ?>" alt="Profil Fotoğrafı" class="profile-pic">
@@ -50,7 +54,6 @@ $profilePic = htmlspecialchars($user['picture']);
             </div>
         </div>
     </div>
-    <button id="darkModeToggle" class="darkmode-btn">🌙</button>
     <script>
     // Sidebar toggle (mobil için de tam ekran açılır menü)
     const sidebar = document.getElementById('sidebar');
