@@ -36,4 +36,9 @@ $days = $controller->getUserWorkoutDays($user['db_id']);
         <a class="back" href="dashboard.php">&larr; Dashboard'a Dön</a>
     </div>
 </body>
+<script>
+if(localStorage.getItem('theme')==='dark') {
+  document.body.setAttribute('data-theme','dark');
+}
+</script>
 </html>

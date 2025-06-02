@@ -88,4 +88,9 @@ foreach ($exercises as $ex) {
         <a class="back" href="workout_list.php">&larr; Antrenman Listesine Dön</a>
     </div>
 </body>
+<script>
+if(localStorage.getItem('theme')==='dark') {
+  document.body.setAttribute('data-theme','dark');
+}
+</script>
 </html>

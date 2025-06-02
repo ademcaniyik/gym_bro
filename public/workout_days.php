@@ -13,3 +13,11 @@ if (!isset($_SESSION['db_id'])) {
 $controller = new WorkoutController();
 $days = $controller->getUserWorkoutDays($_SESSION['db_id']);
 echo json_encode($days);
+?>
+</body>
+<script>
+if(localStorage.getItem('theme')==='dark') {
+  document.body.setAttribute('data-theme','dark');
+}
+</script>
+</html>

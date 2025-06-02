@@ -107,6 +107,9 @@ foreach ($rows as $row) {
     }
     select.addEventListener('change', e => renderChart(e.target.value));
     if (select.value) renderChart(select.value);
+    if(localStorage.getItem('theme')==='dark') {
+      document.body.setAttribute('data-theme','dark');
+    }
     </script>
 </body>
 </html>
