@@ -488,25 +488,23 @@ button.remove-ex:hover, .logout:hover {
   padding: 18px 16px 10px 16px;
 }
 .sidebar-logo {
-  font-size: 1.2em;
-  font-weight: 700;
-  color: var(--text-accent, #2196f3);
   display: flex;
   align-items: center;
   gap: 8px;
 }
+.sidebar-logo i {
+  display: inline;
+  margin-right: 8px;
+}
 .sidebar-logo span {
   display: inline;
-}
-.sidebar-logo i {
-  margin-right: 8px;
 }
 .sidebar.collapsed .sidebar-logo span {
   display: none;
 }
 .sidebar.collapsed .sidebar-logo i {
-  margin-right: 0;
   display: inline;
+  margin-right: 0;
 }
 .sidebar-toggle {
   background: none;
