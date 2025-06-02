@@ -53,6 +53,11 @@ foreach ($rows as $row) {
             <li><a href="logout.php" class="logout"><i class="fa-solid fa-right-from-bracket"></i> <span>Çıkış Yap</span></a></li>
         </ul>
     </div>
+    <!-- Mobilde hamburger ve overlay -->
+    <button class="sidebar-hamburger" id="sidebarHamburger" aria-label="Menüyü Aç/Kapat">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="dashboard-main">
         <div class="dashboard-card">
             <div class="container">
@@ -74,12 +79,40 @@ foreach ($rows as $row) {
     <button id="darkModeToggle" class="darkmode-btn">🌙</button>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-    // Sidebar toggle
+    // Sidebar toggle (mobil ve masaüstü)
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
-    sidebarToggle.onclick = function() {
-      sidebar.classList.toggle('collapsed');
+    const sidebarHamburger = document.getElementById('sidebarHamburger');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    // Masaüstü: daralt/aç
+    sidebarToggle.onclick = function(e) {
+      e.stopPropagation();
+      if(window.innerWidth > 600) {
+        sidebar.classList.toggle('collapsed');
+      } else {
+        sidebar.classList.toggle('open');
+        sidebarOverlay.style.display = sidebar.classList.contains('open') ? 'block' : 'none';
+      }
     };
+    // Mobil: hamburger ile aç/kapat
+    sidebarHamburger.onclick = function(e) {
+      e.stopPropagation();
+      sidebar.classList.add('open');
+      sidebarOverlay.style.display = 'block';
+    };
+    // Overlay veya dışarı tıklayınca kapat
+    sidebarOverlay.onclick = function() {
+      sidebar.classList.remove('open');
+      sidebarOverlay.style.display = 'none';
+    };
+    document.body.addEventListener('click', function(e) {
+      if(window.innerWidth <= 600 && sidebar.classList.contains('open')) {
+        if(!sidebar.contains(e.target) && !sidebarHamburger.contains(e.target)) {
+          sidebar.classList.remove('open');
+          sidebarOverlay.style.display = 'none';
+        }
+      }
+    });
     // Dark mode toggle
     const btn = document.getElementById('darkModeToggle');
     btn.onclick = function() {
@@ -97,6 +130,7 @@ foreach ($rows as $row) {
       document.body.setAttribute('data-theme','dark');
       btn.textContent = '☀️';
     }
+    // Chart.js kodu (değişmedi)
     const allData = <?=json_encode($data)?>;
     const select = document.getElementById('exercise-select');
     const ctx = document.getElementById('progressChart').getContext('2d');
@@ -148,9 +182,6 @@ foreach ($rows as $row) {
     }
     select.addEventListener('change', e => renderChart(e.target.value));
     if (select.value) renderChart(select.value);
-    if(localStorage.getItem('theme')==='dark') {
-      document.body.setAttribute('data-theme','dark');
-    }
     </script>
 </body>
 </html>
