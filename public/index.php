@@ -35,6 +35,7 @@ $loginUrl = $auth->getLoginUrl();
             <li>Her hareket için set/tekrar/kilo kaydı</li>
             <li>Geçmiş antrenmanlarını ve gelişimini grafiklerle takip et</li>
             <li>Mobil ve masaüstü uyumlu modern tasarım</li>
+            <li>Mobil ve masaüstü uyumlu modern tasarım</li>
         </ul>
         <a href="<?php echo htmlspecialchars($loginUrl); ?>" class="google-btn">
             <img src="https://developers.google.com/identity/images/g-logo.png" class="google-icon" alt="Google"> Google ile Giriş Yap
